@@ -1,0 +1,86 @@
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\obj\Debug\Edycja_zdjecia.g.cs
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\obj\Debug\Foldery.g.cs
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\obj\Debug\MainWindow.g.cs
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\obj\Debug\App.g.cs
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\obj\Debug\Przegladarka obazow_MarkupCompile.cache
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\obj\Debug\Przegladarka obazow_MarkupCompile.lref
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\obj\Debug\Edycja_zdjecia.baml
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\obj\Debug\Foldery.baml
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\obj\Debug\MainWindow.baml
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\obj\Debug\Przegladarka obazow.exe
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\obj\Debug\Przegladarka obazow.pdb
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\bin\Debug\Przegladarka obazow.exe.config
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\bin\Debug\Przegladarka obazow.exe
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\bin\Debug\Przegladarka obazow.pdb
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\obj\Debug\Przegladarka obazow.g.resources
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\obj\Debug\Przegladarka_obazow.Properties.Resources.resources
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\obj\Debug\Przegladarka obazow.csproj.GenerateResource.cache
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\obj\Debug\Informacje.g.cs
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\obj\Debug\Informacje.baml
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\obj\Debug\LightValue.g.cs
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\obj\Debug\LightValue.baml
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\bin\Debug\OxyPlot.dll
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\bin\Debug\OxyPlot.Wpf.dll
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\bin\Debug\OxyPlot.xml
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\bin\Debug\OxyPlot.Wpf.xml
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\obj\Debug\Przegladarka obazow.csproj.CopyComplete
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\obj\Debug\ImageResizeValue.g.cs
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\obj\Debug\ImageResizeValue.baml
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\obj\Debug\Przegladarka obazow_Content.g.cs
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\bin\Debug\Accord.dll.config
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\bin\Debug\Accord.dll
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\bin\Debug\Accord.Imaging.dll
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\bin\Debug\Accord.Math.Core.dll
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\bin\Debug\Accord.Math.dll
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\bin\Debug\Accord.Statistics.dll
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\bin\Debug\Accord.xml
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\bin\Debug\Accord.Imaging.xml
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\bin\Debug\Accord.Math.xml
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\bin\Debug\Accord.Math.Core.xml
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\bin\Debug\Accord.Statistics.xml
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\bin\Debug\ImageProcessor.dll
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\bin\Debug\ImageProcessor.xml
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\obj\Debug\Przegladarka obazow.csprojAssemblyReference.cache
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Do pokazania\Przegladarka obazow\Przegladarka obazow\bin\Debug\Accord.dll.config
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Do pokazania\Przegladarka obazow\Przegladarka obazow\bin\Debug\Przegladarka obazow.exe.config
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Do pokazania\Przegladarka obazow\Przegladarka obazow\bin\Debug\Przegladarka obazow.exe
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Do pokazania\Przegladarka obazow\Przegladarka obazow\bin\Debug\Przegladarka obazow.pdb
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Do pokazania\Przegladarka obazow\Przegladarka obazow\bin\Debug\Accord.dll
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Do pokazania\Przegladarka obazow\Przegladarka obazow\bin\Debug\Accord.Imaging.dll
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Do pokazania\Przegladarka obazow\Przegladarka obazow\bin\Debug\Accord.Math.Core.dll
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Do pokazania\Przegladarka obazow\Przegladarka obazow\bin\Debug\Accord.Math.dll
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Do pokazania\Przegladarka obazow\Przegladarka obazow\bin\Debug\Accord.Statistics.dll
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Do pokazania\Przegladarka obazow\Przegladarka obazow\bin\Debug\ImageProcessor.dll
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Do pokazania\Przegladarka obazow\Przegladarka obazow\bin\Debug\OxyPlot.dll
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Do pokazania\Przegladarka obazow\Przegladarka obazow\bin\Debug\OxyPlot.Wpf.dll
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Do pokazania\Przegladarka obazow\Przegladarka obazow\bin\Debug\Accord.xml
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Do pokazania\Przegladarka obazow\Przegladarka obazow\bin\Debug\Accord.Imaging.xml
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Do pokazania\Przegladarka obazow\Przegladarka obazow\bin\Debug\Accord.Math.xml
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Do pokazania\Przegladarka obazow\Przegladarka obazow\bin\Debug\Accord.Math.Core.xml
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Do pokazania\Przegladarka obazow\Przegladarka obazow\bin\Debug\Accord.Statistics.xml
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Do pokazania\Przegladarka obazow\Przegladarka obazow\bin\Debug\ImageProcessor.xml
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Do pokazania\Przegladarka obazow\Przegladarka obazow\bin\Debug\OxyPlot.xml
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Do pokazania\Przegladarka obazow\Przegladarka obazow\bin\Debug\OxyPlot.Wpf.xml
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Do pokazania\Przegladarka obazow\Przegladarka obazow\obj\Debug\Przegladarka obazow.csprojAssemblyReference.cache
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Do pokazania\Przegladarka obazow\Przegladarka obazow\obj\Debug\Edycja_zdjecia.g.cs
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Do pokazania\Przegladarka obazow\Przegladarka obazow\obj\Debug\Foldery.g.cs
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Do pokazania\Przegladarka obazow\Przegladarka obazow\obj\Debug\ImageResizeValue.g.cs
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Do pokazania\Przegladarka obazow\Przegladarka obazow\obj\Debug\Informacje.g.cs
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Do pokazania\Przegladarka obazow\Przegladarka obazow\obj\Debug\LightValue.g.cs
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Do pokazania\Przegladarka obazow\Przegladarka obazow\obj\Debug\MainWindow.g.cs
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Do pokazania\Przegladarka obazow\Przegladarka obazow\obj\Debug\App.g.cs
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Do pokazania\Przegladarka obazow\Przegladarka obazow\obj\Debug\Przegladarka obazow_Content.g.cs
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Do pokazania\Przegladarka obazow\Przegladarka obazow\obj\Debug\Przegladarka obazow_MarkupCompile.cache
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Do pokazania\Przegladarka obazow\Przegladarka obazow\obj\Debug\Przegladarka obazow_MarkupCompile.lref
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Do pokazania\Przegladarka obazow\Przegladarka obazow\obj\Debug\Edycja_zdjecia.baml
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Do pokazania\Przegladarka obazow\Przegladarka obazow\obj\Debug\Foldery.baml
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Do pokazania\Przegladarka obazow\Przegladarka obazow\obj\Debug\ImageResizeValue.baml
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Do pokazania\Przegladarka obazow\Przegladarka obazow\obj\Debug\Informacje.baml
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Do pokazania\Przegladarka obazow\Przegladarka obazow\obj\Debug\LightValue.baml
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Do pokazania\Przegladarka obazow\Przegladarka obazow\obj\Debug\MainWindow.baml
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Do pokazania\Przegladarka obazow\Przegladarka obazow\obj\Debug\Przegladarka obazow.g.resources
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Do pokazania\Przegladarka obazow\Przegladarka obazow\obj\Debug\Przegladarka_obazow.Properties.Resources.resources
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Do pokazania\Przegladarka obazow\Przegladarka obazow\obj\Debug\Przegladarka obazow.csproj.GenerateResource.cache
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Do pokazania\Przegladarka obazow\Przegladarka obazow\obj\Debug\Przegladarka obazow.csproj.CopyComplete
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Do pokazania\Przegladarka obazow\Przegladarka obazow\obj\Debug\Przegladarka obazow.exe
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Do pokazania\Przegladarka obazow\Przegladarka obazow\obj\Debug\Przegladarka obazow.pdb

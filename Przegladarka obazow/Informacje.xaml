@@ -1,0 +1,15 @@
+﻿<Window x:Class="Przegladarka_obazow.Informacje"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Przegladarka_obazow"
+        mc:Ignorable="d"
+        Title="Informacje" Height="450" Width="800">
+    <Grid>
+        <Button x:Name="OkButton" Content="OK" Margin="337,342,380,40" Click="OkButton_Click"/>
+        <Label x:Name="ResolutionLabel" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="67" Width="157"/>
+        <Label x:Name="FullPathLabel" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Height="67" Width="157"/>
+
+    </Grid>
+</Window>
