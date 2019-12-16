@@ -1,0 +1,22 @@
+﻿<Window x:Class="Przegladarka_obazow.Informacje"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Przegladarka_obazow"
+        mc:Ignorable="d"
+        Title="Informacje" Height="450" Width="800">
+    <Grid>
+        <Button x:Name="OkButton" Content="OK" Margin="337,342,380,40" Click="OkButton_Click"/>
+        <Label x:Name="FileNameLabel" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="67" Width="772"/>
+        <Label x:Name="FilePathLabel" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Height="67" Width="772"/>
+        <Label x:Name="FormatLabel" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top" Height="67" Width="772"/>
+        <Label x:Name="ResolutionLabel" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top" Height="67" Width="772"/>
+        <Label x:Name="PixelFormatLabel" HorizontalAlignment="Left" Margin="10,130,0,0" VerticalAlignment="Top" Height="67" Width="772"/>
+        <Label x:Name="DiscSizeLabel" HorizontalAlignment="Left" Margin="10,160,0,0" VerticalAlignment="Top" Height="67" Width="772"/>
+        <Label x:Name="MemorySizeLabel" HorizontalAlignment="Left" Margin="10,190,0,0" VerticalAlignment="Top" Height="67" Width="772"/>
+        <Label x:Name="DateLabel" HorizontalAlignment="Left" Margin="10,220,0,0" VerticalAlignment="Top" Height="67" Width="772"/>
+        <Label x:Name="LastDateModificationLabel" HorizontalAlignment="Left" Margin="10,250,0,0" VerticalAlignment="Top" Height="67" Width="772"/>
+
+    </Grid>
+</Window>

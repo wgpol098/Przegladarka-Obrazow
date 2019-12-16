@@ -29,7 +29,6 @@ namespace Przegladarka_obazow
         {
             InitializeComponent();
             RefreshFolders();
-            Title = "Edytor zdjęć";
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -53,7 +52,8 @@ namespace Przegladarka_obazow
         private void MenuItem_Click_2(object sender, RoutedEventArgs e)
         {
             Foldery fold = new Foldery(folderFileName);
-            fold.Show();
+            fold.ShowDialog();
+            MenuItem_Click_3(sender,e);
         }
 
         private void GoToEdition(object sender, MouseButtonEventArgs e)
@@ -91,6 +91,7 @@ namespace Przegladarka_obazow
                         var pliki = Directory.EnumerateFiles(line/*,"*.*", SearchOption.AllDirectories*/).Where(s => s.EndsWith(".jpg") || s.EndsWith(".png") || s.EndsWith(".bmp") || s.EndsWith(".gif"));
                         for (int i = 0; i < pliki.Count(); i++)
                             thumbnails.Items.Add(pliki.ElementAt(i));
+
                     }
                     else MessageBox.Show("Lokalizacja: " + line + " nie istnieje!", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
                 }

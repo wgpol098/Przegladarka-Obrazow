@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Przegladarka_obazow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Edytor zdjęć" Height="450" Width="800">
     <Grid>
         
         
@@ -27,7 +27,10 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
-                        <Image Name="image1" Source="{Binding}" Width="300" Height="300" Stretch="UniformToFill" MouseDown="GoToEdition" />
+                        <Button>
+                            <Image Name="image1" Source="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="300" Height="300" Stretch="UniformToFill" MouseDown="GoToEdition" />
+                        </Button>
+                        
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
