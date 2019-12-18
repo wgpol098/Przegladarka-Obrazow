@@ -8,20 +8,17 @@
         xmlns:oxy1="http://oxyplot.org/wpf"
         mc:Ignorable="d"
         Closing="Edycja_zdjecia_Closing"
-        Title="Edycja_zdjecia" Height="450" Width="800" Topmost="False">
-
-    <Window.InputBindings>
-        <KeyBinding Modifiers="Ctrl" Key="O" />
-    </Window.InputBindings>
+        Title="Edycja_zdjecia" Height="450" Width="800" Topmost="False"
+        KeyDown="myControl_KeyDown">
     <Grid>
         <DockPanel>
             <Menu IsMainMenu="True" DockPanel.Dock="Top">
                 <MenuItem Header="_Plik">
                     <MenuItem Header="_Otwórz" InputGestureText="Ctrl+O" Click="MenuItem_Click_9"/>
                     <MenuItem Header="Zapisz" InputGestureText="Ctrl+S" Click="MenuItem_Click_8"/>
-                    <MenuItem Header="Zapisz jako..." InputGestureText="Ctrl+Shift+S" Click="MenuItem_Click_2"/>
+                    <MenuItem Header="Zapisz jako..." InputGestureText="Ctrl+S" Click="MenuItem_Click_2"/>
                     <Separator/>
-                    <MenuItem Header="Zamknij" InputGestureText="Ctrl+W" Click="MenuItem_Click_1"/>
+                    <MenuItem Header="Zamknij" InputGestureText="Esc" Click="MenuItem_Click_1"/>
                 </MenuItem>
                 <MenuItem Header="Filtry">
                     <MenuItem Header="Negatyw">
@@ -75,11 +72,11 @@
                     <Separator/>
                     <MenuItem Header="Zmiana rozdzielczości" Click="MenuItem_Click_13" />
                     <Separator/>
-                    <MenuItem Header="Informacje" Click="MenuItem_Click_5"/>
+                    <MenuItem Header="Informacje" InputGestureText="Ctrl+I" Click="MenuItem_Click_5"/>
                 </MenuItem>
-                <MenuItem Header="Widok">
-                    <MenuItem Name="MenuItemHistagram"  Header="Histogram" IsCheckable="True" Click="MenuItem_Click_12"/>
-                    <MenuItem Name="MenuItemFaceRecognition"  Header="Rozpoznawanie twarzy" IsCheckable="True" Click="MenuItemFaceRecognition_Click"/>
+                <MenuItem Header="Opcje">
+                    <MenuItem Name="MenuItemHistagram" InputGestureText="Ctrl+H"  Header="Histogram" IsCheckable="True" Click="MenuItem_Click_12"/>
+                    <MenuItem Name="MenuItemFaceDetection"  InputGestureText="Crtl+F" Header="Rozpoznawanie twarzy" IsCheckable="True" Click="MenuItemFaceDetection_Click"/>
                 </MenuItem>
             </Menu>
         </DockPanel>

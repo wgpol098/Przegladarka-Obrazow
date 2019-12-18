@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Przegladarka_obazow"
         mc:Ignorable="d"
-        Title="Edytor zdjęć" Height="450" Width="800">
+        Title="Edytor zdjęć" Height="450" Width="800"
+        KeyDown="myControl_KeyDown">
     <Grid>
         
         
@@ -14,12 +15,14 @@
                 <MenuItem Header="_Plik">
                     <MenuItem Header="_Otwórz plik do edycji" InputGestureText="Ctrl+O" Click="MenuItem_Click"/>
                     <Separator/>
-                    <MenuItem Header="Zamknij" InputGestureText="Ctrl+W" Click="MenuItem_Click_1"/>
+                    <MenuItem Header="Zamknij" InputGestureText="Esc" Click="MenuItem_Click_1"/>
                 </MenuItem>
                 <MenuItem Header="_Opcje">
                     <MenuItem Header="_Foldery ze zdjęciami" Click="MenuItem_Click_2"/>
                     <MenuItem Header="Odśwież zdjęcia" Click="MenuItem_Click_3"/>
+                    <MenuItem Name="Face" Header="Zdjęcia na których są twarze" IsCheckable="False" Click="MenuItem_Click_4"/>
                 </MenuItem>
+                <MenuItem Header="Pokaz slajdów" Click="MenuItem_Click_5"/>
             </Menu>
         </DockPanel>
 
@@ -30,7 +33,6 @@
                         <Button>
                             <Image Name="image1" Source="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="300" Height="300" Stretch="UniformToFill" MouseDown="GoToEdition" />
                         </Button>
-                        
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

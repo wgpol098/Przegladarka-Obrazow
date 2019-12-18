@@ -15,6 +15,8 @@ using Przegladarka_obazow.ValueWindow;
 using System.Threading;
 using Emgu.CV;
 using Emgu.CV.Structure;
+using System.Threading.Tasks;
+using Przegladarka_obazow.Tools.Filters;
 
 namespace Przegladarka_obazow
 {
@@ -25,7 +27,7 @@ namespace Przegladarka_obazow
     {
         //Do EMGU.CV
         static readonly CascadeClassifier cascadeClasifier = new CascadeClassifier("haarcascade_frontalface_alt_tree.xml");
-        bool FaceRecognitionValue = false;
+        bool FaceDetectionValue = false;
         //Zmienna przechowująca nazwę pliku w pamięci
         string imageName = "";
         //Zmienne potrzebne do przechowywania w pamięci zmian w obrazie
@@ -58,6 +60,7 @@ namespace Przegladarka_obazow
             EditedBitMap.BeginInit();
             EditedBitMap.Source = (BitmapSource)zdj.Source;
             EditedBitMap.EndInit();
+
             bitmap = BitmapFromImageSource(zdj.Source.Clone());
 
             ImageEditBox.Source = EditedBitMap;//.CloneCurrentValue();// Clone();
@@ -65,15 +68,16 @@ namespace Przegladarka_obazow
 
             //Histogram
             HistogramControlVisible(false);
-            FaceRecognition();
+            FaceDetection();
             Plot1.PlotType = OxyPlot.PlotType.XY;
 
         }
-     
-        private void MenuItem_Click(object sender, RoutedEventArgs e) => Negative(0);
-        private void MenuItem_Click_14(object sender, RoutedEventArgs e) => Negative(1);
-        private void MenuItem_Click_15(object sender, RoutedEventArgs e) => Negative(2);
-        private void MenuItem_Click_16(object sender, RoutedEventArgs e) => Negative(3);
+
+        //Ze swoich
+        private void MenuItem_Click(object sender, RoutedEventArgs e) => FilterAdd(new Negative(0));
+        private void MenuItem_Click_14(object sender, RoutedEventArgs e) => FilterAdd(new Negative(1));
+        private void MenuItem_Click_15(object sender, RoutedEventArgs e) => FilterAdd(new Negative(2));
+        private void MenuItem_Click_16(object sender, RoutedEventArgs e) => FilterAdd(new Negative(3));
 
 
         private void MenuItem_Click_1(object sender, RoutedEventArgs e) => Close();
@@ -130,9 +134,9 @@ namespace Przegladarka_obazow
             FilterAdd(new HueModifier(hueval));
         }
         
-        private void FaceRecognition(bool OpenProperty=false)
+        private void FaceDetection(bool OpenProperty=false)
         {
-            if (FaceRecognitionValue == false) return;
+            if (FaceDetectionValue == false) return;
 
             Bitmap tmp = (Bitmap)bitmap.Clone();
             Image<Bgr, byte> grayImage = new Image<Bgr, byte>(tmp);
@@ -175,22 +179,12 @@ namespace Przegladarka_obazow
                 Title = imageName;
 
                 HistogramDraw();
-                FaceRecognition();              
+                FaceDetection();              
             } 
         }
         private void DropImageEnter(object sender, DragEventArgs e)
         {
             e.Effects = DragDropEffects.All;
-            //MessageBox.Show("Powinno dzialac ale nie dziala!");
-            //MessageBox.Show(e.Data.GetDataPresent(typeof()).ToString());
-            //if(e.Data.GetDataPresent(typeof(Bitmap)))
-            {
-                //System.Windows.Controls.Image img = (System.Windows.Controls.Image)sender;
-                //img.Source = ImageSourceFromBitmap((Bitmap)e.Data.GetData(typeof(Bitmap)));
-                //img.Source = (BitmapSource)e.Data.GetData(typeof(System.Windows.Controls.Image));
-
-                //ImageEditBox.Source = img.Source;
-            }
         }
         private void ObrotWPrawo_Click(object sender, RoutedEventArgs e)
         {
@@ -217,39 +211,9 @@ namespace Przegladarka_obazow
 
             ImageEditBox.Source = EditedBitMap;
             bitmap = BitmapFromImageSource(ImageEditBox.Source);
+            if( imageModified == false ) this.Title = this.Title + "*";
             imageModified = true;
-            FaceRecognition();
-
-            this.Cursor = Cursors.Arrow;
-        }
-
-        private void Negative(int val)
-        {
-            this.Cursor = Cursors.Wait;
-
-            PreviousImage = (Bitmap)bitmap.Clone();
-
-            int bytesPerPixel = System.Drawing.Image.GetPixelFormatSize(bitmap.PixelFormat) / 8;
-
-            BitmapData bmpData = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadWrite, bitmap.PixelFormat);
-
-            byte[] pixelValues = new byte[Math.Abs(bmpData.Stride) * bitmap.Height];
-            System.Runtime.InteropServices.Marshal.Copy(bmpData.Scan0, pixelValues, 0, pixelValues.Length);
-
-            for (int y = 0; y < bitmap.Height; y++)
-                for (int x = 0; x < bitmap.Width; x++)
-                {
-                    int index = y * bmpData.Stride + x * bytesPerPixel;
-                    if (val == 0 || val == 1) pixelValues[index + 2] = (byte)(255 - pixelValues[index + 2]);
-                    if (val == 0 || val == 2) pixelValues[index + 1] = (byte)(255 - pixelValues[index + 1]);
-                    if (val == 0 || val == 3) pixelValues[index] = (byte)(255 - pixelValues[index]);
-                }
-            System.Runtime.InteropServices.Marshal.Copy(pixelValues, 0, bmpData.Scan0, pixelValues.Length);
-            bitmap.UnlockBits(bmpData);
-
-            ImageEditBox.Source = ImageSourceFromBitmap(bitmap);
-
-            ImageModified();
+            FaceDetection();
 
             this.Cursor = Cursors.Arrow;
         }
@@ -266,13 +230,13 @@ namespace Przegladarka_obazow
             var pngEncoder = new PngBitmapEncoder();
             pngEncoder.Frames.Add(BitmapFrame.Create((BitmapSource)img));
             pngEncoder.Save(stream);
-            return new Bitmap(stream);
+            return new Bitmap(stream);           
         }
 
         private void MenuItem_Click_2(object sender, RoutedEventArgs e)
         {
             SaveFileDialog d = new SaveFileDialog();
-            d.Filter = "Image Files(*.BMP;*.JPG;*.GIF)|*.BMP;*.JPG;*.GIF|All files (*.*)|*.*";
+            d.Filter = "Image Files(*.BMP;*.JPG;*.GIF)|*.bmp;*.jpg;*.gif|All files (*.*)|*.*";
             if (d.ShowDialog() == true)
             {
                 Bitmap bit = BitmapFromImageSource(ImageEditBox.Source);
@@ -321,7 +285,7 @@ namespace Przegladarka_obazow
             bitmap.RotateFlip(RotateFlipType.RotateNoneFlipX);
             ImageEditBox.Source = ImageSourceFromBitmap(bitmap);
             imageModified = true;
-            FaceRecognition();
+            FaceDetection();
             this.Cursor = Cursors.Arrow;
         }
 
@@ -336,7 +300,7 @@ namespace Przegladarka_obazow
             ImageEditBox.Source = ImageSourceFromBitmap(PreviousImage);
             bitmap = PreviousImage;
             HistogramDraw();
-            FaceRecognition();
+            FaceDetection();
         }
 
         //rozjaśnianie
@@ -373,10 +337,10 @@ namespace Przegladarka_obazow
                     Bitmap b = (Bitmap)bit.Clone();
                     b.Dispose();
                     ImageEditBox.Source = null;
-                    b.Save(imageName);
+                    String FName = imageName.Replace("\\", @"\");
+                    b.Save(FName);
                 }
             }
-
         }
 
         private void Edycja_zdjecia_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -400,9 +364,11 @@ namespace Przegladarka_obazow
                 bitmap = PreviousImage;
                 imageName = ImageEditBox.Source.ToString();
                 imageName = imageName.Remove(0, 8);
+                imageName = imageName.Replace('/', '\\');
+                this.Title = imageName;
             }
             HistogramDraw();
-            FaceRecognition();
+            FaceDetection();
         }
 
         //Korekcja gamma
@@ -451,8 +417,10 @@ namespace Przegladarka_obazow
 
             System.Runtime.InteropServices.Marshal.Copy(bmpData.Scan0, pixelValues, 0, pixelValues.Length);
 
-            for (int i = 0; i < pixelValues.Length; i++)
+            Parallel.For(0, pixelValues.Length, i =>
+            {
                 pixelValues[i] = LUT[pixelValues[i]];
+            }); 
 
             System.Runtime.InteropServices.Marshal.Copy(pixelValues, 0, bmpData.Scan0, pixelValues.Length);
             bitmap.UnlockBits(bmpData);
@@ -466,78 +434,38 @@ namespace Przegladarka_obazow
 
             this.Cursor = Cursors.Wait;
 
+            Array.Clear(HistogramAll, 0, 256);
+            Array.Clear(HistogramR, 0, 256);
+            Array.Clear(HistogramG, 0, 256);
+            Array.Clear(HistogramB, 0, 256);
+
+            int bytesPerPixel = System.Drawing.Image.GetPixelFormatSize(bitmap.PixelFormat) / 8;
+            BitmapData bmpData = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadWrite, bitmap.PixelFormat);
+
+            byte[] pixelValues = new byte[Math.Abs(bmpData.Stride) * bitmap.Height];
+            System.Runtime.InteropServices.Marshal.Copy(bmpData.Scan0, pixelValues, 0, pixelValues.Length);
+
+            int width = bitmap.Width;
+            int height = bitmap.Height;
+            Parallel.For(0, height, y =>
+             {
+                 Parallel.For(0, width, x =>
+                  {
+                      int index = y * bmpData.Stride + x * bytesPerPixel;
+                      HistogramR[pixelValues[index + 2]]++;
+                      HistogramG[pixelValues[index + 1]]++;
+                      HistogramB[pixelValues[index]]++;
+                  });
+             });
+                
+            for(int i=0;i<256;i++)
+                HistogramAll[i] = HistogramR[i] + HistogramG[i] + HistogramB[i];
             
+            System.Runtime.InteropServices.Marshal.Copy(pixelValues, 0, bmpData.Scan0, pixelValues.Length);
+            bitmap.UnlockBits(bmpData);
 
-            for (int i = 0; i < 256; i++)
-            {
-                HistogramAll[i] = 0;
-                HistogramR[i] = 0;
-                HistogramG[i] = 0;
-                HistogramB[i] = 0;
-            }
-
-            
-
-            Thread pol = new Thread(PixelHisCount);
-            Thread pol1 = new Thread(PixelHisCount1);
-            pol.Start();
-            pol1.Start();
-
-            pol.Join();
-            pol1.Join();
             FillHistogram();
             this.Cursor = Cursors.Arrow;
-        }
-
-        private void PixelHisCount()
-        {
-            Bitmap bitmap1 = (Bitmap)bitmap.Clone();
-            int bytesPerPixel = System.Drawing.Image.GetPixelFormatSize(bitmap1.PixelFormat) / 8;
-            BitmapData bmpData = bitmap1.LockBits(new Rectangle(0, 0, bitmap1.Width, bitmap1.Height), ImageLockMode.ReadWrite, bitmap1.PixelFormat);
-
-            byte[] pixelValues = new byte[Math.Abs(bmpData.Stride) * bitmap1.Height];
-            System.Runtime.InteropServices.Marshal.Copy(bmpData.Scan0, pixelValues, 0, pixelValues.Length);
-
-            for (int y = 0; y < bitmap1.Height/2; y++)
-                for (int x = 0; x < bitmap1.Width; x++)
-                {
-                    int index = y * bmpData.Stride + x * bytesPerPixel;
-                    HistogramR[pixelValues[index + 2]]++;
-                    HistogramG[pixelValues[index + 1]]++;
-                    HistogramB[pixelValues[index]]++;
-
-                    HistogramAll[pixelValues[index + 2]]++;
-                    HistogramAll[pixelValues[index + 1]]++;
-                    HistogramAll[pixelValues[index]]++;
-
-                }
-            System.Runtime.InteropServices.Marshal.Copy(pixelValues, 0, bmpData.Scan0, pixelValues.Length);
-            bitmap1.UnlockBits(bmpData);
-        }
-        private void PixelHisCount1()
-        {
-            Bitmap bitmap1 = (Bitmap)bitmap.Clone();
-            int bytesPerPixel = System.Drawing.Image.GetPixelFormatSize(bitmap1.PixelFormat) / 8;
-            BitmapData bmpData = bitmap1.LockBits(new Rectangle(0, 0, bitmap1.Width, bitmap1.Height), ImageLockMode.ReadWrite, bitmap1.PixelFormat);
-
-            byte[] pixelValues = new byte[Math.Abs(bmpData.Stride) * bitmap1.Height];
-            System.Runtime.InteropServices.Marshal.Copy(bmpData.Scan0, pixelValues, 0, pixelValues.Length);
-
-            for (int y = bitmap1.Height/2; y < bitmap1.Height; y++)
-                for (int x = 0; x < bitmap1.Width; x++)
-                {
-                    int index = y * bmpData.Stride + x * bytesPerPixel;
-                    HistogramR[pixelValues[index + 2]]++;
-                    HistogramG[pixelValues[index + 1]]++;
-                    HistogramB[pixelValues[index]]++;
-
-                    HistogramAll[pixelValues[index + 2]]++;
-                    HistogramAll[pixelValues[index + 1]]++;
-                    HistogramAll[pixelValues[index]]++;
-
-                }
-            System.Runtime.InteropServices.Marshal.Copy(pixelValues, 0, bmpData.Scan0, pixelValues.Length);
-            bitmap1.UnlockBits(bmpData);
         }
 
         private void FillHistogram()
@@ -554,7 +482,6 @@ namespace Przegladarka_obazow
             }
             no.ItemsSource = Points;
         }
-
 
         private void MenuItem_Click_12(object sender, RoutedEventArgs e)
         {
@@ -641,36 +568,84 @@ namespace Przegladarka_obazow
         private void FilterAdd(dynamic filter)
         {
             this.Cursor = Cursors.Wait;
-            PreviousImage = (Bitmap)bitmap.Clone();
             try
-            {
+            {              
+                PreviousImage = (Bitmap)bitmap.Clone();
                 filter.ApplyInPlace(bitmap);
+                ImageEditBox.Source = ImageSourceFromBitmap(bitmap);              
+                ImageModified();
             }
             catch
             {
                 MessageBox.Show("Format Pikseli tego obrazu nie umożliwia wykonania tej operacji!", "Błąd!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            ImageEditBox.Source = ImageSourceFromBitmap(bitmap);        
             this.Cursor = Cursors.Arrow;
-            ImageModified();
         }
 
-        private void MenuItemFaceRecognition_Click(object sender, RoutedEventArgs e)
+        private void MenuItemFaceDetection_Click(object sender, RoutedEventArgs e)
         {
-            if (FaceRecognitionValue == true)
+            this.Cursor = Cursors.Wait;
+
+            if (FaceDetectionValue == true)
             {
-                FaceRecognitionValue = false;
+                FaceDetectionValue = false;
                 ImageEditBox.Source = ImageSourceFromBitmap(bitmap);
             } 
-            else FaceRecognitionValue = true;
-            FaceRecognition(true);
+            else FaceDetectionValue = true;
+            FaceDetection(true);
+
+            this.Cursor = Cursors.Arrow;
         }
 
         private void ImageModified()
         {
+            if (imageModified == false) this.Title = this.Title + "*";
             imageModified = true;
-            FaceRecognition();
+            FaceDetection();
             HistogramDraw();
+        }
+
+        //Obsługa Klawiszy
+        private void myControl_KeyDown(object sender, KeyEventArgs e)
+        {
+            RoutedEventArgs tmp = new RoutedEventArgs();
+
+            //Otwieranie pliku
+            if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.O)
+                MenuItem_Click_9(sender,tmp);
+
+            //Zapisz
+            if(Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.S)        
+                MenuItem_Click_8(sender, tmp);
+
+            //Zapisz jako...
+            if (Keyboard.Modifiers == ModifierKeys.Shift && e.Key == Key.S)
+                MenuItem_Click_2(sender, tmp);
+
+            //Wyjdz
+            if (e.Key == Key.Escape)
+                MenuItem_Click_1(sender, tmp);
+
+            //Histogram
+            if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.H)
+            {
+                MenuItem_Click_12(sender, tmp);
+                if (MenuItemHistagram.IsChecked == false) MenuItemHistagram.IsChecked = true;
+                else MenuItemHistagram.IsChecked = false;
+            }
+                
+            //Wykrywanie twarzy
+            if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.F)
+            {
+                MenuItemFaceDetection_Click(sender, tmp);
+                if (MenuItemFaceDetection.IsChecked == false) MenuItemFaceDetection.IsChecked = true;
+                else MenuItemFaceDetection.IsChecked = false;
+
+            }
+
+            //Informacje
+            if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.I)
+                MenuItem_Click_5(sender, tmp);
         }
     }
 }

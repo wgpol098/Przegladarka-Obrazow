@@ -23,6 +23,7 @@ namespace Przegladarka_obazow
         public Informacje(Image zdj, String imagename)
         {
             InitializeComponent();
+            OkButton.Focus();
 
             System.IO.Stream stream = new System.IO.MemoryStream();
             var pngEncoder = new PngBitmapEncoder();

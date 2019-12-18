@@ -130,6 +130,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AppWindow\Slideshow.xaml.cs">
+      <DependentUpon>Slideshow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\Filters\Negative.cs" />
     <Compile Include="ValueWindow\HueModifierValue.xaml.cs">
       <DependentUpon>HueModifierValue.xaml</DependentUpon>
     </Compile>
@@ -144,6 +148,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AppWindow\Foldery.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppWindow\Slideshow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

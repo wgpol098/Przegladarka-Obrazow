@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Przegladarka_obazow"
         mc:Ignorable="d"
-        Title="Informacje" Height="450" Width="800">
+        Title="Informacje" Height="450" Width="800" MinHeight="450" MaxHeight="450" MinWidth="800" MaxWidth="800">
     <Grid>
         <Button x:Name="OkButton" Content="OK" Margin="337,342,380,40" Click="OkButton_Click"/>
         <Label x:Name="FileNameLabel" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="67" Width="772"/>
