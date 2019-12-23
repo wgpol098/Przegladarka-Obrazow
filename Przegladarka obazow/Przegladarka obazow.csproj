@@ -133,7 +133,10 @@
     <Compile Include="AppWindow\Slideshow.xaml.cs">
       <DependentUpon>Slideshow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Tools\Filters\GrayScale.cs" />
+    <Compile Include="Tools\Histogram\HistogramAlignment.cs" />
     <Compile Include="Tools\Filters\Negative.cs" />
+    <Compile Include="Tools\Histogram\HistogramStretching.cs" />
     <Compile Include="ValueWindow\HueModifierValue.xaml.cs">
       <DependentUpon>HueModifierValue.xaml</DependentUpon>
     </Compile>

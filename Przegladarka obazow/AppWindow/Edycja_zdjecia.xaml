@@ -16,7 +16,7 @@
                 <MenuItem Header="_Plik">
                     <MenuItem Header="_Otwórz" InputGestureText="Ctrl+O" Click="MenuItem_Click_9"/>
                     <MenuItem Header="Zapisz" InputGestureText="Ctrl+S" Click="MenuItem_Click_8"/>
-                    <MenuItem Header="Zapisz jako..." InputGestureText="Ctrl+S" Click="MenuItem_Click_2"/>
+                    <MenuItem Header="Zapisz jako..." InputGestureText="Shift+S" Click="MenuItem_Click_2"/>
                     <Separator/>
                     <MenuItem Header="Zamknij" InputGestureText="Esc" Click="MenuItem_Click_1"/>
                 </MenuItem>
@@ -28,9 +28,11 @@
                         <MenuItem Header="Kanał zielony" Click="MenuItem_Click_15"/>
                         <MenuItem Header="Kanał niebieski" Click="MenuItem_Click_16"/>
                     </MenuItem>
-                    
+                    <MenuItem Header="Wyrównanie histogramu" Click="MenuItem_Click_40"/>
+                    <MenuItem Header="Rozciąganie histogramu" Click="MenuItem_Click_41"/>
+                    <MenuItem Header="Odcienie szarości" Click="MenuItem_Click_3"/>
+
                     <MenuItem Header="Accord Imagining">
-                        <MenuItem Header="Odcienie szarości" Click="MenuItem_Click_3"/>
                         <MenuItem Header="Sepia" Click="MenuItem_Click_6"/>
                         <MenuItem Header="Obraz olejny" Click="MenuItem_Click_17"/>
                         <MenuItem Header="Pixeloza" Click="MenuItem_Click_18"/>
@@ -57,6 +59,7 @@
                         <MenuItem Header="BrightnessCorrection" Click="MenuItem_Click_36"/>
                         <MenuItem Header="ConservativeSmoothing" Click="MenuItem_Click_37"/>
                         <MenuItem Header="Edges" Click="MenuItem_Click_38"/>
+                        <MenuItem Header="Pixellate" Click="MenuItem_Click_39"/>
                     </MenuItem>
                     
                 </MenuItem>
@@ -71,6 +74,8 @@
                     <MenuItem Header="Korekcja kontrastu" Click="MenuItem_Click_11"/>
                     <Separator/>
                     <MenuItem Header="Zmiana rozdzielczości" Click="MenuItem_Click_13" />
+                    <Separator/>
+                    <MenuItem Header="Cofnij" Click="Cofnij_Click" InputGestureText="Ctrl+Z"/>
                     <Separator/>
                     <MenuItem Header="Informacje" InputGestureText="Ctrl+I" Click="MenuItem_Click_5"/>
                 </MenuItem>

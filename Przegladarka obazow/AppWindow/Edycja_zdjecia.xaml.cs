@@ -17,6 +17,8 @@ using Emgu.CV;
 using Emgu.CV.Structure;
 using System.Threading.Tasks;
 using Przegladarka_obazow.Tools.Filters;
+using AForge.Imaging;
+using Przegladarka_obazow.Tools.Histogram;
 
 namespace Przegladarka_obazow
 {
@@ -61,16 +63,14 @@ namespace Przegladarka_obazow
             EditedBitMap.Source = (BitmapSource)zdj.Source;
             EditedBitMap.EndInit();
 
-            bitmap = BitmapFromImageSource(zdj.Source.Clone());
+            bitmap = BitmapFromImageSource(zdj.Source);
 
             ImageEditBox.Source = EditedBitMap;//.CloneCurrentValue();// Clone();
             PreviousImage = bitmap;
 
-            //Histogram
             HistogramControlVisible(false);
             FaceDetection();
             Plot1.PlotType = OxyPlot.PlotType.XY;
-
         }
 
         //Ze swoich
@@ -78,6 +78,11 @@ namespace Przegladarka_obazow
         private void MenuItem_Click_14(object sender, RoutedEventArgs e) => FilterAdd(new Negative(1));
         private void MenuItem_Click_15(object sender, RoutedEventArgs e) => FilterAdd(new Negative(2));
         private void MenuItem_Click_16(object sender, RoutedEventArgs e) => FilterAdd(new Negative(3));
+        //Wyrownanie histogramu
+        private void MenuItem_Click_40(object sender, RoutedEventArgs e) => FilterAdd(new HistogramAlignment());
+        //Rozciaganie histogramu
+        private void MenuItem_Click_41(object sender, RoutedEventArgs e) => FilterAdd(new HistogramStretching());
+        private void MenuItem_Click_3(object sender, RoutedEventArgs e) => FilterAdd(new GrayScale());
 
 
         private void MenuItem_Click_1(object sender, RoutedEventArgs e) => Close();
@@ -122,6 +127,8 @@ namespace Przegladarka_obazow
         private void MenuItem_Click_36(object sender, RoutedEventArgs e) => FilterAdd(new BrightnessCorrection());
         private void MenuItem_Click_37(object sender, RoutedEventArgs e) => FilterAdd(new ConservativeSmoothing());
         private void MenuItem_Click_38(object sender, RoutedEventArgs e) => FilterAdd(new Edges());
+        private void MenuItem_Click_39(object sender, RoutedEventArgs e) => FilterAdd(new Pixellate());
+
 
 
         //Modyfikator odcienia
@@ -143,20 +150,21 @@ namespace Przegladarka_obazow
             Rectangle[] rectangles = cascadeClasifier.DetectMultiScale(grayImage, 1.2, 1);
 
             int i = 0;
-            foreach(Rectangle rectange in rectangles)
+            foreach(Rectangle rectangle in rectangles)
             {
                 using (Graphics graphics = Graphics.FromImage(tmp))
                 {
                     using (System.Drawing.Pen pen= new System.Drawing.Pen(System.Drawing.Color.Red, 1))
                     {
-                        graphics.DrawRectangle(pen, rectange);
+                        graphics.DrawRectangle(pen, rectangle);
                         i++;
                     }
                 }
             }
             if(i==0)
-                if(OpenProperty == true) MessageBox.Show("Nie znaleziono twarzy na zdjęciu!", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);         
-            ImageEditBox.Source = ImageSourceFromBitmap(tmp);
+                if(OpenProperty == true) MessageBox.Show("Nie znaleziono twarzy na zdjęciu!", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information); 
+            if(i!=0) ImageEditBox.Source = ImageSourceFromBitmap(tmp);
+            tmp.Dispose();
         }
         private void DropImageDrop(object sender, DragEventArgs e)
         {
@@ -203,7 +211,6 @@ namespace Przegladarka_obazow
             EditedBitMap = new TransformedBitmap();
 
             EditedBitMap.BeginInit();
-            //EditedBitMap.Source = (BitmapSource)ImageEditBox.Source;
             EditedBitMap.Source = (BitmapSource)ImageSourceFromBitmap(bitmap);
             if (value == -1) EditedBitMap.Transform = new RotateTransform(90);
             if (value == 1) EditedBitMap.Transform = new RotateTransform(-90);
@@ -244,27 +251,6 @@ namespace Przegladarka_obazow
             }
         }
 
-        private void MenuItem_Click_3(object sender, RoutedEventArgs e)
-        {
-            this.Cursor = Cursors.Wait;
-
-            PreviousImage = (Bitmap)bitmap.Clone();
-
-            FormatConvertedBitmap format = new FormatConvertedBitmap();
-
-            format.BeginInit();
-            format.Source = (BitmapSource)ImageEditBox.Source;
-            format.DestinationFormat = PixelFormats.Gray32Float;
-            format.EndInit();
-
-            ImageEditBox.Source = format;
-            bitmap = BitmapFromImageSource(ImageEditBox.Source);
-
-            ImageModified();
-
-            this.Cursor = Cursors.Arrow;
-        }
-
         private void MouseDownHandler(object sender, MouseButtonEventArgs e)
         {
             //Sprawdz czy prawym czy lewym
@@ -298,7 +284,12 @@ namespace Przegladarka_obazow
         private void Cofnij_Click(object sender, RoutedEventArgs e)
         {
             ImageEditBox.Source = ImageSourceFromBitmap(PreviousImage);
-            bitmap = PreviousImage;
+            using (Bitmap tmp = new Bitmap(bitmap))
+            {
+                bitmap = PreviousImage;
+                PreviousImage = (Bitmap)tmp.Clone();
+                tmp.Dispose();
+            }             
             HistogramDraw();
             FaceDetection();
         }
@@ -345,9 +336,18 @@ namespace Przegladarka_obazow
 
         private void Edycja_zdjecia_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (imageModified == false) return;
+            if (imageModified == false)
+            {
+                bitmap.Dispose();
+                PreviousImage.Dispose();
+                ImageEditBox.Source = null;
+                return;
+            }
             RoutedEventArgs e2 = new RoutedEventArgs();
             MenuItem_Click_8(sender, e2);
+            bitmap.Dispose();
+            PreviousImage.Dispose();
+            ImageEditBox.Source = null;
         }
 
         //Otwieranie pliku
@@ -569,7 +569,7 @@ namespace Przegladarka_obazow
         {
             this.Cursor = Cursors.Wait;
             try
-            {              
+            {
                 PreviousImage = (Bitmap)bitmap.Clone();
                 filter.ApplyInPlace(bitmap);
                 ImageEditBox.Source = ImageSourceFromBitmap(bitmap);              
@@ -577,7 +577,7 @@ namespace Przegladarka_obazow
             }
             catch
             {
-                MessageBox.Show("Format Pikseli tego obrazu nie umożliwia wykonania tej operacji!", "Błąd!", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Format pikseli tego obrazu nie umożliwia wykonania tej operacji!", "Błąd!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             this.Cursor = Cursors.Arrow;
         }
@@ -610,6 +610,9 @@ namespace Przegladarka_obazow
         {
             RoutedEventArgs tmp = new RoutedEventArgs();
 
+            //Cofanie zmian
+            if(Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.Z)
+                Cofnij_Click(sender,tmp);
             //Otwieranie pliku
             if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.O)
                 MenuItem_Click_9(sender,tmp);
@@ -646,6 +649,7 @@ namespace Przegladarka_obazow
             //Informacje
             if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.I)
                 MenuItem_Click_5(sender, tmp);
+
         }
     }
 }
