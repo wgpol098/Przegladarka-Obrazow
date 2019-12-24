@@ -31,6 +31,7 @@
                     <MenuItem Header="Wyrównanie histogramu" Click="MenuItem_Click_40"/>
                     <MenuItem Header="Rozciąganie histogramu" Click="MenuItem_Click_41"/>
                     <MenuItem Header="Odcienie szarości" Click="MenuItem_Click_3"/>
+                    <MenuItem Header="Odcienie szarości to RGB" Click="MenuItem_Click_42"/>
 
                     <MenuItem Header="Accord Imagining">
                         <MenuItem Header="Sepia" Click="MenuItem_Click_6"/>

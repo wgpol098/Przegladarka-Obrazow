@@ -58,15 +58,9 @@ namespace Przegladarka_obazow
             imageName = imageName.Replace('/','\\');
             Title = /*"Edycja " + */imageName;
 
-            TransformedBitmap EditedBitMap = new TransformedBitmap();
-            EditedBitMap.BeginInit();
-            EditedBitMap.Source = (BitmapSource)zdj.Source;
-            EditedBitMap.EndInit();
-
             bitmap = BitmapFromImageSource(zdj.Source);
-
-            ImageEditBox.Source = EditedBitMap;//.CloneCurrentValue();// Clone();
-            PreviousImage = bitmap;
+            ImageEditBox.Source = ImageSourceFromBitmap(bitmap);
+            PreviousImage = (Bitmap)bitmap.Clone();
 
             HistogramControlVisible(false);
             FaceDetection();
@@ -83,6 +77,7 @@ namespace Przegladarka_obazow
         //Rozciaganie histogramu
         private void MenuItem_Click_41(object sender, RoutedEventArgs e) => FilterAdd(new HistogramStretching());
         private void MenuItem_Click_3(object sender, RoutedEventArgs e) => FilterAdd(new GrayScale());
+        private void MenuItem_Click_42(object sender, RoutedEventArgs e) => FilterAdd(new GrayScaleToRGB());
 
 
         private void MenuItem_Click_1(object sender, RoutedEventArgs e) => Close();
@@ -196,18 +191,19 @@ namespace Przegladarka_obazow
         }
         private void ObrotWPrawo_Click(object sender, RoutedEventArgs e)
         {
-            PreviousImage = (Bitmap)bitmap.Clone();
+            PreviousImage = (Bitmap)bitmap;
             Obrot(1);
         }
         private void ObrotWLewo_Click(object sender, RoutedEventArgs e)
         {
-            PreviousImage = (Bitmap)bitmap.Clone();
+            PreviousImage = (Bitmap)bitmap;
             Obrot(-1);
         }
         private void Obrot(int value)
         {
             this.Cursor = Cursors.Wait;
 
+            EditedBitMap = null;
             EditedBitMap = new TransformedBitmap();
 
             EditedBitMap.BeginInit();
@@ -221,14 +217,12 @@ namespace Przegladarka_obazow
             if( imageModified == false ) this.Title = this.Title + "*";
             imageModified = true;
             FaceDetection();
-
             this.Cursor = Cursors.Arrow;
         }
 
         private ImageSource ImageSourceFromBitmap(Bitmap bmp)
         {
-            var handle = bmp.GetHbitmap();
-            return Imaging.CreateBitmapSourceFromHBitmap(handle, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+            return Imaging.CreateBitmapSourceFromHBitmap(bmp.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
         }
 
         private Bitmap BitmapFromImageSource(ImageSource img)
@@ -259,7 +253,7 @@ namespace Przegladarka_obazow
 
         private void MenuItem_Click_4(object sender, RoutedEventArgs e)
         {
-            PreviousImage = (Bitmap)bitmap.Clone();
+            PreviousImage = (Bitmap)bitmap;
             Obrot(1);
             Obrot(1);
         }
@@ -284,14 +278,15 @@ namespace Przegladarka_obazow
         private void Cofnij_Click(object sender, RoutedEventArgs e)
         {
             ImageEditBox.Source = ImageSourceFromBitmap(PreviousImage);
-            using (Bitmap tmp = new Bitmap(bitmap))
+            using (Bitmap tmp = bitmap)
             {
                 bitmap = PreviousImage;
                 PreviousImage = (Bitmap)tmp.Clone();
-                tmp.Dispose();
-            }             
+                tmp?.Dispose();
+            }           
             HistogramDraw();
             FaceDetection();
+            GC.Collect();
         }
 
         //rozjaśnianie
@@ -341,6 +336,7 @@ namespace Przegladarka_obazow
                 bitmap.Dispose();
                 PreviousImage.Dispose();
                 ImageEditBox.Source = null;
+                GC.Collect();
                 return;
             }
             RoutedEventArgs e2 = new RoutedEventArgs();
@@ -348,6 +344,7 @@ namespace Przegladarka_obazow
             bitmap.Dispose();
             PreviousImage.Dispose();
             ImageEditBox.Source = null;
+            GC.Collect();
         }
 
         //Otwieranie pliku
@@ -470,6 +467,7 @@ namespace Przegladarka_obazow
 
         private void FillHistogram()
         {
+            no.ItemsSource = null;
             IList<OxyPlot.DataPoint> Points;
             Points = new List<OxyPlot.DataPoint>();
 
@@ -572,8 +570,9 @@ namespace Przegladarka_obazow
             {
                 PreviousImage = (Bitmap)bitmap.Clone();
                 filter.ApplyInPlace(bitmap);
-                ImageEditBox.Source = ImageSourceFromBitmap(bitmap);              
+                ImageEditBox.Source = ImageSourceFromBitmap(bitmap);
                 ImageModified();
+                GC.Collect();
             }
             catch
             {

@@ -33,7 +33,7 @@ namespace Przegladarka_obazow.AppWindow
             ItemsImage = Items;
             UpdateImage();
         }
-        public Slideshow(ItemCollection Items,System.Windows.Controls.Image img)
+        public Slideshow(ItemCollection Items, System.Windows.Controls.Image img)
         {
             InitializeComponent();
 
@@ -83,6 +83,7 @@ namespace Przegladarka_obazow.AppWindow
                 ImageSlide.Source = null;
                 ImageSlide.Source = ImageSourceFromBitmap(tmp);
                 tmp.Dispose();
+                GC.Collect();
             }
         }
 
@@ -90,6 +91,12 @@ namespace Przegladarka_obazow.AppWindow
         {
             var handle = bmp.GetHbitmap();
             return Imaging.CreateBitmapSourceFromHBitmap(handle, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+        }
+
+        private void SlideshowClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            ImageSlide.Source = null;
+            GC.Collect();
         }
     }
 }

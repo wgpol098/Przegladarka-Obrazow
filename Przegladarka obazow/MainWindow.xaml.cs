@@ -117,7 +117,7 @@ namespace Przegladarka_obazow
             RefreshFolders();
         }
 
-        private void CreateThumbnails(object sender, RoutedEventArgs e)
+        private void CreateThumbnails(object sender)
         {
             System.Windows.Controls.Image s = (System.Windows.Controls.Image)sender;
             Stream stream = new MemoryStream();
@@ -206,9 +206,8 @@ namespace Przegladarka_obazow
                 }
             }
             tmp.Dispose();
-            tmp = null;
+            grayImage.Dispose();
             GC.Collect();
-            GC.WaitForPendingFinalizers();
             if (i != 0) return true;
 
             return false;
