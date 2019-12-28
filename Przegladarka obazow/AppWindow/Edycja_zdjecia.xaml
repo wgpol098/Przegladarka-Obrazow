@@ -32,6 +32,9 @@
                     <MenuItem Header="Rozciąganie histogramu" Click="MenuItem_Click_41"/>
                     <MenuItem Header="Odcienie szarości" Click="MenuItem_Click_3"/>
                     <MenuItem Header="Odcienie szarości to RGB" Click="MenuItem_Click_42"/>
+                    <MenuItem Header="Binaryzacja obrazu" Click="MenuItem_Click_43"/>
+                    <MenuItem Header="Rotacja kolorów" Click="MenuItem_Click_44"/>
+                    <MenuItem Header="Modyfikacja zakresu pikseli" Click="MenuItem_Click_47"/>
 
                     <MenuItem Header="Accord Imagining">
                         <MenuItem Header="Sepia" Click="MenuItem_Click_6"/>
@@ -61,6 +64,8 @@
                         <MenuItem Header="ConservativeSmoothing" Click="MenuItem_Click_37"/>
                         <MenuItem Header="Edges" Click="MenuItem_Click_38"/>
                         <MenuItem Header="Pixellate" Click="MenuItem_Click_39"/>
+                        <MenuItem Header="Sharpen" Click="MenuItem_Click_45"/>
+                        <MenuItem Header="SimplePosterization" Click="MenuItem_Click_46"/>
                     </MenuItem>
                     
                 </MenuItem>
@@ -87,6 +92,15 @@
             </Menu>
         </DockPanel>
 
+        <ListBox Margin="0,26,0,0">
+            <ListBox.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Offset="0" Color="LightGray"/>
+                    <GradientStop Offset="0.5" Color="Gray"/>
+                    <GradientStop Offset="1" Color="LightGray"/>
+                </LinearGradientBrush>
+            </ListBox.Background>
+        </ListBox>
         <Image x:Name="ImageEditBox" Margin="10,60,325,10" Source="" MouseDown="MouseDownHandler" HorizontalAlignment="Stretch" Width="Auto" Stretch="Uniform" AllowDrop="true" DragEnter="DropImageEnter" DragDrop.Drop="DropImageDrop"/>
         <Button x:Name="ObrotWPrawo" Content="W prawo" HorizontalAlignment="Left" Margin="90,35,0,0" VerticalAlignment="Top" Width="75" Click="ObrotWPrawo_Click"/>
         <Button x:Name="ObrotWLewo" Content="W lewo" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" Width="75" Click="ObrotWLewo_Click"/>

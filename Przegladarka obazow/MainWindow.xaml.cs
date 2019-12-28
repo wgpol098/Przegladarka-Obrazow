@@ -87,6 +87,9 @@ namespace Przegladarka_obazow
             if (File.Exists(folderFileName))
             {
                 StreamReader file = new StreamReader(folderFileName);
+                StreamReader file1 = new StreamReader(folderFileName);
+                string tmpEdition = file1.ReadToEnd();
+                file1.Close();
                 string line;
                 while ((line = file.ReadLine()) != null)
                 {
@@ -95,10 +98,14 @@ namespace Przegladarka_obazow
                         var pliki = Directory.EnumerateFiles(line/*,"*.*", SearchOption.AllDirectories*/).Where(s => s.EndsWith(".jpg") || s.EndsWith(".png") || s.EndsWith(".bmp") || s.EndsWith(".gif") || s.EndsWith(".JPG") || s.EndsWith(".BMP") || s.EndsWith(".PNG") || s.EndsWith(".GIF"));
                         for (int i = 0; i < pliki.Count(); i++)
                             thumbnails.Items.Add(pliki.ElementAt(i));
-
                     }
-                    else MessageBox.Show("Lokalizacja: " + line + " nie istnieje!", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+                    else
+                    {
+                        MessageBox.Show("Lokalizacja: " + line + " nie istnieje!", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+                        //tmpEdition = tmpEdition.Replace(line, "");
+                    } 
                 }
+                MessageBox.Show(tmpEdition);
                 file.Close();
             }
             else EmptyFolder();

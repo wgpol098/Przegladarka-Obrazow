@@ -2,6 +2,7 @@
 using System.Windows;
 using System.IO;
 using System.Windows.Forms;
+using Przegladarka_obazow.AppWindow;
 
 namespace Przegladarka_obazow
 {
@@ -60,7 +61,12 @@ namespace Przegladarka_obazow
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            //Dodaj kod
+            FileContentBox.Focus();
+            string tmp = FileContentBox.SelectedText;
+            System.Windows.MessageBox.Show(tmp);
+            string tmp1 = FileContentBox.Text;
+            tmp1 = tmp1.Replace(tmp, "");
+            FileContentBox.Text = tmp1;
         }
     }
 }

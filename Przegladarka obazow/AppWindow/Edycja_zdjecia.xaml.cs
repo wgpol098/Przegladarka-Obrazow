@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 using Przegladarka_obazow.Tools.Filters;
 using AForge.Imaging;
 using Przegladarka_obazow.Tools.Histogram;
+using Przegladarka_obazow.Tools.Modifications;
 
 namespace Przegladarka_obazow
 {
@@ -78,6 +79,7 @@ namespace Przegladarka_obazow
         private void MenuItem_Click_41(object sender, RoutedEventArgs e) => FilterAdd(new HistogramStretching());
         private void MenuItem_Click_3(object sender, RoutedEventArgs e) => FilterAdd(new GrayScale());
         private void MenuItem_Click_42(object sender, RoutedEventArgs e) => FilterAdd(new GrayScaleToRGB());
+        private void MenuItem_Click_44(object sender, RoutedEventArgs e) => FilterAdd(new Tools.Filters.RotateChannels());
 
 
         private void MenuItem_Click_1(object sender, RoutedEventArgs e) => Close();
@@ -123,7 +125,8 @@ namespace Przegladarka_obazow
         private void MenuItem_Click_37(object sender, RoutedEventArgs e) => FilterAdd(new ConservativeSmoothing());
         private void MenuItem_Click_38(object sender, RoutedEventArgs e) => FilterAdd(new Edges());
         private void MenuItem_Click_39(object sender, RoutedEventArgs e) => FilterAdd(new Pixellate());
-
+        private void MenuItem_Click_45(object sender, RoutedEventArgs e) => FilterAdd(new Sharpen());
+        private void MenuItem_Click_46(object sender, RoutedEventArgs e) => FilterAdd(new SimplePosterization());
 
 
         //Modyfikator odcienia
@@ -135,7 +138,33 @@ namespace Przegladarka_obazow
             dlg.Close();
             FilterAdd(new HueModifier(hueval));
         }
+
+        //Binaryzacja obrazu
+        private void MenuItem_Click_43(object sender, RoutedEventArgs e)
+        {
+            BinarizationValue dlg = new BinarizationValue();
+            dlg.ShowDialog();
+            int binval = dlg.binarizationvalue();
+            dlg.Close();
+            FilterAdd(new Binarization(binval));
+        }
+
+        //Wartość pikseli
+        private void MenuItem_Click_47(object sender, RoutedEventArgs e)
+        {
+            PixelsRangeValue dlg = new PixelsRangeValue();
+            dlg.ShowDialog();
+            int minrange = dlg.minrangevalue();
+            int maxrange = dlg.maxrangevalue();
+            bool Rvalue = dlg.rvalue();
+            bool Gvalue = dlg.gvalue();
+            bool Bvalue = dlg.bvalue();
+            dlg.Close();
+            FilterAdd(new PixelsRange(minrange, maxrange,Rvalue,Gvalue,Bvalue));
+        }
         
+
+
         private void FaceDetection(bool OpenProperty=false)
         {
             if (FaceDetectionValue == false) return;

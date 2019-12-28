@@ -8,8 +8,6 @@
         Title="Edytor zdjęć" Height="450" Width="800"
         KeyDown="myControl_KeyDown">
     <Grid>
-        
-        
         <DockPanel>
             <Menu IsMainMenu="True" DockPanel.Dock="Top">
                 <MenuItem Header="_Plik">
@@ -27,6 +25,13 @@
         </DockPanel>
 
         <ListBox ScrollViewer.HorizontalScrollBarVisibility="Disabled" x:Name="thumbnails" Margin="0,26,0,0">
+            <ListBox.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Offset="0" Color="LightGray"/>
+                    <GradientStop Offset="0.5" Color="Gray"/>
+                    <GradientStop Offset="1" Color="LightGray"/>
+                </LinearGradientBrush>
+            </ListBox.Background>
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
