@@ -19,8 +19,9 @@ namespace Przegladarka_obazow
     /// </summary>
     public partial class ImageResizeValue : Window
     {
-        int width;
-        int height;
+        private int width;
+        private int height;
+        private bool modified = false;
         public ImageResizeValue(Image zdj)
         {
             InitializeComponent();
@@ -64,6 +65,7 @@ namespace Przegladarka_obazow
 
                 width = Convert.ToInt32(XPX.Text);
                 height = Convert.ToInt32(YPX.Text);
+                modified = true;
                 this.Close();
             }
             else MessageBox.Show("Podano błędne dane!","Błąd!",MessageBoxButton.OK,MessageBoxImage.Error);
@@ -99,6 +101,7 @@ namespace Przegladarka_obazow
         public int GetWidth() => width;
         public int GetHeight() => height;
 
+        public bool ModifiedStatus() => modified;
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             Close();

@@ -3,6 +3,7 @@ using System.Windows;
 using System.IO;
 using System.Windows.Forms;
 using Przegladarka_obazow.AppWindow;
+using System.Text.RegularExpressions;
 
 namespace Przegladarka_obazow
 {
@@ -19,7 +20,7 @@ namespace Przegladarka_obazow
 
             fileName = _fileName;
             StreamReader file = new StreamReader(fileName);
-            String content = file.ReadToEnd();
+            String content = Regex.Replace(file.ReadToEnd(), @"^\s+$[\r\n]*", string.Empty, RegexOptions.Multiline);
             FileContentBox.Text = content;
             file.Close();
         }
@@ -53,9 +54,10 @@ namespace Przegladarka_obazow
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             StreamWriter zapis = new StreamWriter(fileName);
-            String content = FileContentBox.Text;
+            String content = Regex.Replace(FileContentBox.Text, @"^\s+$[\r\n]*", string.Empty, RegexOptions.Multiline);
             zapis.Write(content);
             zapis.Close();
+            FileContentBox.Text = content;
             System.Windows.MessageBox.Show("Zapis zakończony powodzeniem!", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 

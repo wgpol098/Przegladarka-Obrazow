@@ -134,9 +134,8 @@ namespace Przegladarka_obazow
         {
             HueModifierValue dlg = new HueModifierValue();
             dlg.ShowDialog();
-            int hueval = dlg.huevalue();
+            if(dlg.ModifiedStatus()==true) FilterAdd(new HueModifier(dlg.huevalue()));
             dlg.Close();
-            FilterAdd(new HueModifier(hueval));
         }
 
         //Binaryzacja obrazu
@@ -144,9 +143,8 @@ namespace Przegladarka_obazow
         {
             BinarizationValue dlg = new BinarizationValue();
             dlg.ShowDialog();
-            int binval = dlg.binarizationvalue();
+            if(dlg.ModifiedStatus()==true) FilterAdd(new Binarization(dlg.binarizationvalue()));
             dlg.Close();
-            FilterAdd(new Binarization(binval));
         }
 
         //Wartość pikseli
@@ -154,13 +152,8 @@ namespace Przegladarka_obazow
         {
             PixelsRangeValue dlg = new PixelsRangeValue();
             dlg.ShowDialog();
-            int minrange = dlg.minrangevalue();
-            int maxrange = dlg.maxrangevalue();
-            bool Rvalue = dlg.rvalue();
-            bool Gvalue = dlg.gvalue();
-            bool Bvalue = dlg.bvalue();
+            if(dlg.ModifiedStatus()==true) FilterAdd(new PixelsRange(dlg.minrangevalue(), dlg.maxrangevalue(), dlg.rvalue(), dlg.gvalue(), dlg.bvalue()));
             dlg.Close();
-            FilterAdd(new PixelsRange(minrange, maxrange,Rvalue,Gvalue,Bvalue));
         }
         
 
@@ -220,18 +213,18 @@ namespace Przegladarka_obazow
         }
         private void ObrotWPrawo_Click(object sender, RoutedEventArgs e)
         {
-            PreviousImage = (Bitmap)bitmap;
+            PreviousImage = bitmap;
             Obrot(1);
         }
         private void ObrotWLewo_Click(object sender, RoutedEventArgs e)
         {
-            PreviousImage = (Bitmap)bitmap;
+            PreviousImage = bitmap;
             Obrot(-1);
         }
         private void Obrot(int value)
         {
             this.Cursor = Cursors.Wait;
-
+            
             EditedBitMap = null;
             EditedBitMap = new TransformedBitmap();
 
@@ -240,10 +233,10 @@ namespace Przegladarka_obazow
             if (value == -1) EditedBitMap.Transform = new RotateTransform(90);
             if (value == 1) EditedBitMap.Transform = new RotateTransform(-90);
             EditedBitMap.EndInit();
-
+            
             ImageEditBox.Source = EditedBitMap;
             bitmap = BitmapFromImageSource(ImageEditBox.Source);
-            if( imageModified == false ) this.Title = this.Title + "*";
+            if( imageModified == false ) Title += "*";
             imageModified = true;
             FaceDetection();
             this.Cursor = Cursors.Arrow;
@@ -324,19 +317,21 @@ namespace Przegladarka_obazow
             PreviousImage = (Bitmap)bitmap.Clone();
             LightValue dlg = new LightValue();
             dlg.ShowDialog();
-            int lightvalue = dlg.lightvalue();
-            dlg.Close();
 
             this.Cursor = Cursors.Wait;
-            byte[] LUT = new byte[256];
-            for (int i = 0; i < 256; i++)
-                if ((lightvalue + i) > 255) LUT[i] = 255;
-                else if ((lightvalue + i) < 0) LUT[i] = 0;
-                else LUT[i] = (byte)(lightvalue + i);
+            if (dlg.ModifiedStatus()==true)
+            {
+                int lightvalue = dlg.lightvalue();              
+                byte[] LUT = new byte[256];
+                for (int i = 0; i < 256; i++)
+                    if ((lightvalue + i) > 255) LUT[i] = 255;
+                    else if ((lightvalue + i) < 0) LUT[i] = 0;
+                    else LUT[i] = (byte)(lightvalue + i);
 
-            ImageEditBox.Source = SetLUTtoPixel(LUT);
-            ImageModified();
-
+                ImageEditBox.Source = SetLUTtoPixel(LUT);
+                ImageModified();
+            }
+            dlg.Close();
             this.Cursor = Cursors.Arrow;
         }
 
@@ -572,24 +567,27 @@ namespace Przegladarka_obazow
             ImageResizeValue dlg = new ImageResizeValue(ImageEditBox);
             dlg.ShowDialog();
 
-            BitmapImage bmp = new BitmapImage();
+            if(dlg.ModifiedStatus()==true)
+            {
+                BitmapImage bmp = new BitmapImage();
 
-            Stream stream = new MemoryStream();
-            var pngEncoder = new PngBitmapEncoder();
-            pngEncoder.Frames.Add(BitmapFrame.Create((BitmapSource)ImageEditBox.Source));
-            pngEncoder.Save(stream);
+                Stream stream = new MemoryStream();
+                var pngEncoder = new PngBitmapEncoder();
+                pngEncoder.Frames.Add(BitmapFrame.Create((BitmapSource)ImageEditBox.Source));
+                pngEncoder.Save(stream);
 
-            bmp.BeginInit();
-            bmp.StreamSource = stream;
-            bmp.DecodePixelWidth = dlg.GetWidth();
-            bmp.DecodePixelHeight = dlg.GetHeight();
-            bmp.EndInit();
+                bmp.BeginInit();
+                bmp.StreamSource = stream;
+                bmp.DecodePixelWidth = dlg.GetWidth();
+                bmp.DecodePixelHeight = dlg.GetHeight();
+                bmp.EndInit();
+
+                ImageEditBox.Source = bmp;
+                bitmap = BitmapFromImageSource(ImageEditBox.Source);
+                ImageModified();
+            }
 
             dlg.Close();
-
-            ImageEditBox.Source = bmp;
-            bitmap = BitmapFromImageSource(ImageEditBox.Source);
-            ImageModified();
         }
        
         private void FilterAdd(dynamic filter)
@@ -641,6 +639,7 @@ namespace Przegladarka_obazow
             //Cofanie zmian
             if(Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.Z)
                 Cofnij_Click(sender,tmp);
+
             //Otwieranie pliku
             if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.O)
                 MenuItem_Click_9(sender,tmp);
@@ -671,13 +670,11 @@ namespace Przegladarka_obazow
                 MenuItemFaceDetection_Click(sender, tmp);
                 if (MenuItemFaceDetection.IsChecked == false) MenuItemFaceDetection.IsChecked = true;
                 else MenuItemFaceDetection.IsChecked = false;
-
             }
 
             //Informacje
             if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.I)
                 MenuItem_Click_5(sender, tmp);
-
         }
     }
 }

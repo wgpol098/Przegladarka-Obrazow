@@ -17,6 +17,7 @@ namespace Przegladarka_obazow.ValueWindow
     public partial class BinarizationValue : Window
     {
         private int binarizationval = 0;
+        private bool modified = false;
         public BinarizationValue()
         {
             InitializeComponent();
@@ -25,9 +26,11 @@ namespace Przegladarka_obazow.ValueWindow
         private void OkButtonBinarization_Click(object sender, RoutedEventArgs e)
         {
             binarizationval = (int)(SliderBinarizationValue.Value / 1000 * 255);
+            modified = true;
             Close();
         }
 
+        public bool ModifiedStatus() => modified;
         public int binarizationvalue() => binarizationval;
     }
 }

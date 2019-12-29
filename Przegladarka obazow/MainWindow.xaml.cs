@@ -19,6 +19,7 @@ using Emgu.CV;
 using Emgu.CV.Structure;
 using System.Runtime.InteropServices;
 using Przegladarka_obazow.AppWindow;
+using System.Text.RegularExpressions;
 
 namespace Przegladarka_obazow
 {
@@ -87,9 +88,14 @@ namespace Przegladarka_obazow
             if (File.Exists(folderFileName))
             {
                 StreamReader file = new StreamReader(folderFileName);
-                StreamReader file1 = new StreamReader(folderFileName);
-                string tmpEdition = file1.ReadToEnd();
-                file1.Close();
+                string tmpEdition = Regex.Replace(file.ReadToEnd(), @"^\s+$[\r\n]*", string.Empty, RegexOptions.Multiline);
+                file.Close();
+
+                StreamWriter zapis = new StreamWriter(folderFileName);
+                zapis.Write(tmpEdition);
+                zapis.Close();
+
+                file = new StreamReader(folderFileName);
                 string line;
                 while ((line = file.ReadLine()) != null)
                 {
@@ -101,12 +107,20 @@ namespace Przegladarka_obazow
                     }
                     else
                     {
-                        MessageBox.Show("Lokalizacja: " + line + " nie istnieje!", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
-                        //tmpEdition = tmpEdition.Replace(line, "");
+                        var result = MessageBox.Show("Lokalizacja: " + line + " nie istnieje!\nUsunąć z listy?", "Error!", MessageBoxButton.YesNo, MessageBoxImage.Error);
+                        if(result == MessageBoxResult.Yes)
+                        {
+                            int last = tmpEdition.IndexOf(line) + line.Length;
+                            int first = tmpEdition.LastIndexOf(line);
+                            tmpEdition = tmpEdition.Remove(first, last - first);
+                        }
                     } 
-                }
-                MessageBox.Show(tmpEdition);
+                } 
                 file.Close();
+
+                zapis = new StreamWriter(folderFileName);
+                zapis.Write(Regex.Replace(tmpEdition, @"^\s+$[\r\n]*", string.Empty, RegexOptions.Multiline));
+                zapis.Close();
             }
             else EmptyFolder();
 

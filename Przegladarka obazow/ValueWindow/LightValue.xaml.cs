@@ -20,6 +20,7 @@ namespace Przegladarka_obazow
     public partial class LightValue : Window
     {
         private int lightval = 0;
+        private bool modified = false;
         public LightValue()
         {
             InitializeComponent();
@@ -28,9 +29,11 @@ namespace Przegladarka_obazow
         private void OkButtonLight_Click(object sender, RoutedEventArgs e)
         {
             lightval = (int)(SliderLight.Value/1000*255);
+            modified = true;
             Close();
         }
 
+        public bool ModifiedStatus() => modified;
         public int lightvalue() => lightval;
     }
 }

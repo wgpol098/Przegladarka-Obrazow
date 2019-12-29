@@ -20,6 +20,7 @@ namespace Przegladarka_obazow.ValueWindow
     public partial class HueModifierValue : Window
     {
         private int hueval = 0;
+        private bool modified = false;
         public HueModifierValue()
         {
             InitializeComponent();
@@ -28,9 +29,11 @@ namespace Przegladarka_obazow.ValueWindow
         private void OkButtonLight_Click(object sender, RoutedEventArgs e)
         {
             hueval = (int)(SliderHueModifier.Value/1000*359);
+            modified = true;
             Close();
         }
 
+        public bool ModifiedStatus() => modified;
         public int huevalue() => hueval;
     }
 }

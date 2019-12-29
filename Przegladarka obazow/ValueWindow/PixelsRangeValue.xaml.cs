@@ -16,11 +16,12 @@ namespace Przegladarka_obazow.ValueWindow
 {
     public partial class PixelsRangeValue : Window
     {
-        int MinRange = 0;
-        int MaxRange = 255;
-        bool R = false;
-        bool G = false;
-        bool B = false;
+        private int MinRange = 0;
+        private int MaxRange = 255;
+        private bool R = false;
+        private bool G = false;
+        private bool B = false;
+        private bool modified = false;
         public PixelsRangeValue()
         {
             InitializeComponent();
@@ -41,8 +42,11 @@ namespace Przegladarka_obazow.ValueWindow
                 if (CheckG.IsChecked == true) G = true;
                 if (CheckB.IsChecked == true) B = true;
             }
+            modified = true;
             Close();
         }
+
+        public bool ModifiedStatus() => modified;
 
         public int minrangevalue() => MinRange;
         public int maxrangevalue() => MaxRange;
