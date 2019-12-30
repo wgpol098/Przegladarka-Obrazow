@@ -12,5 +12,13 @@
     <Grid>
         <Image Name="ImageSlide" Margin="10"/>
 
+
+
+        <Label x:Name="PopupAlert" Margin="321,10,318,0" Background="LightGray" Height="55"  VerticalAlignment="Top" BorderBrush="Gray" BorderThickness="3" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
+            Nacisnij "ESC" aby wyjść.
+            Nacisnij "Enter" aby zamknąć tą informację.
+        </Label>
+
+
     </Grid>
 </Window>

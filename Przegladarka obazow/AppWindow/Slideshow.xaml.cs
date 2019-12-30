@@ -68,6 +68,10 @@ namespace Przegladarka_obazow.AppWindow
             {
                 Close();
             }
+            if(e.Key == Key.Enter)
+            {
+                PopupAlert.Visibility = Visibility.Hidden;
+            }
         }
 
         private void ExitAnimation()

@@ -81,7 +81,9 @@
                     <Separator/>
                     <MenuItem Header="Zmiana rozdzielczości" Click="MenuItem_Click_13" />
                     <Separator/>
-                    <MenuItem Header="Cofnij" Click="Cofnij_Click" InputGestureText="Ctrl+Z"/>
+                    <MenuItem Header="Wykryj tekst" Click="MenuItem_Click_48"/>
+                    <Separator/>
+                    <MenuItem Header="Cofnij ostatnią zmianę" Click="Cofnij_Click" InputGestureText="Ctrl+Z"/>
                     <Separator/>
                     <MenuItem Header="Informacje" InputGestureText="Ctrl+I" Click="MenuItem_Click_5"/>
                 </MenuItem>

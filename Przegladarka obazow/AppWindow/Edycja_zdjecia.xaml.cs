@@ -20,6 +20,8 @@ using Przegladarka_obazow.Tools.Filters;
 using AForge.Imaging;
 using Przegladarka_obazow.Tools.Histogram;
 using Przegladarka_obazow.Tools.Modifications;
+using Przegladarka_obazow.Tools.LUT;
+using Tesseract;
 
 namespace Przegladarka_obazow
 {
@@ -156,8 +158,6 @@ namespace Przegladarka_obazow
             dlg.Close();
         }
         
-
-
         private void FaceDetection(bool OpenProperty=false)
         {
             if (FaceDetectionValue == false) return;
@@ -321,14 +321,9 @@ namespace Przegladarka_obazow
             this.Cursor = Cursors.Wait;
             if (dlg.ModifiedStatus()==true)
             {
-                int lightvalue = dlg.lightvalue();              
-                byte[] LUT = new byte[256];
-                for (int i = 0; i < 256; i++)
-                    if ((lightvalue + i) > 255) LUT[i] = 255;
-                    else if ((lightvalue + i) < 0) LUT[i] = 0;
-                    else LUT[i] = (byte)(lightvalue + i);
-
-                ImageEditBox.Source = SetLUTtoPixel(LUT);
+                byte[] LUT = LutModifications.LightLUT(dlg.lightvalue());
+                LutModifications.SetLUTToBitmap(bitmap, LUT);
+                ImageEditBox.Source = ImageSourceFromBitmap(bitmap);
                 ImageModified();
             }
             dlg.Close();
@@ -386,7 +381,7 @@ namespace Przegladarka_obazow
                 imageName = ImageEditBox.Source.ToString();
                 imageName = imageName.Remove(0, 8);
                 imageName = imageName.Replace('/', '\\');
-                this.Title = imageName;
+                Title = imageName;
             }
             HistogramDraw();
             FaceDetection();
@@ -398,13 +393,9 @@ namespace Przegladarka_obazow
             this.Cursor = Cursors.Wait;
             PreviousImage = (Bitmap)bitmap.Clone();
             double gammavalue = 1.1;
-
-            byte[] LUT = new byte[256];
-            for (int i = 0; i < 256; i++)
-                if ((255 * Math.Pow(i / 255.0, 1 / gammavalue)) > 255) LUT[i] = 255;
-                else LUT[i] = (byte)(255 * Math.Pow(i / 255.0, 1 / gammavalue));
-
-            ImageEditBox.Source = SetLUTtoPixel(LUT);
+            byte[] LUT = LutModifications.GammaLUT(gammavalue);
+            LutModifications.SetLUTToBitmap(bitmap, LUT);
+            ImageEditBox.Source = ImageSourceFromBitmap(bitmap);
             ImageModified();
             this.Cursor = Cursors.Arrow;
         }
@@ -414,38 +405,12 @@ namespace Przegladarka_obazow
         {
             this.Cursor = Cursors.Wait;
             PreviousImage = (Bitmap)bitmap.Clone();
-            double korekcjavalue = 30;
-            byte[] LUT = new byte[256];
-            double a;
-
-            if (korekcjavalue <= 0) a = 1.0 + (korekcjavalue / 256.0);
-            else a = 256.0 / Math.Pow(2, Math.Log(257 - korekcjavalue, 2));
-            for (int i = 0; i < 256; i++)
-                if ((a * (i - 127) + 127) > 255) LUT[i] = 255;
-                else if ((a * (i - 127) + 127) < 0) LUT[i] = 0;
-                else LUT[i] = (byte)(a * (i - 127) + 127);
-
-            ImageEditBox.Source = SetLUTtoPixel(LUT);
+            double correctionvalue = 30;
+            byte[] LUT = LutModifications.CorrectionLUT(correctionvalue);
+            LutModifications.SetLUTToBitmap(bitmap, LUT);
+            ImageEditBox.Source = ImageSourceFromBitmap(bitmap);
             ImageModified();
-
             this.Cursor = Cursors.Arrow;
-        }
-
-        private ImageSource SetLUTtoPixel(byte[] LUT)
-        {
-            BitmapData bmpData = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadWrite, bitmap.PixelFormat);
-            byte[] pixelValues = new byte[Math.Abs(bmpData.Stride) * bitmap.Height];
-
-            System.Runtime.InteropServices.Marshal.Copy(bmpData.Scan0, pixelValues, 0, pixelValues.Length);
-
-            Parallel.For(0, pixelValues.Length, i =>
-            {
-                pixelValues[i] = LUT[pixelValues[i]];
-            }); 
-
-            System.Runtime.InteropServices.Marshal.Copy(pixelValues, 0, bmpData.Scan0, pixelValues.Length);
-            bitmap.UnlockBits(bmpData);
-            return ImageSourceFromBitmap(bitmap);
         }
 
         private void HistogramDraw()
@@ -675,6 +640,13 @@ namespace Przegladarka_obazow
             //Informacje
             if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.I)
                 MenuItem_Click_5(sender, tmp);
+        }
+
+        private void MenuItem_Click_48(object sender, RoutedEventArgs e)
+        {
+            var ocr = new TesseractEngine("./tessdata", "eng", EngineMode.TesseractAndCube);
+            var page = ocr.Process(bitmap);
+            MessageBox.Show(page.GetText());
         }
     }
 }

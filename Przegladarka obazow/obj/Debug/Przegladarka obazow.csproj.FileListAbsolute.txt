@@ -91,3 +91,8 @@ C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labol
 C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\obj\Debug\ValueWindow\BinarizationValue.baml
 C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\obj\Debug\ValueWindow\PixelsRangeValue.g.cs
 C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\obj\Debug\ValueWindow\PixelsRangeValue.baml
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\bin\Debug\x86\liblept1753.dll
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\bin\Debug\x86\libtesseract3052.dll
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\bin\Debug\x64\liblept1753.dll
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\bin\Debug\x64\libtesseract3052.dll
+C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\bin\Debug\Tesseract.dll

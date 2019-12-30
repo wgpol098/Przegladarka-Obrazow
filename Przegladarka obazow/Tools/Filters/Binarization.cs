@@ -12,6 +12,7 @@ namespace Przegladarka_obazow.Tools.Filters
     {
         //value is 0-255
         int value = 0;
+        Edycja_zdjecia elo;
 
         public Binarization(int _value)
         {
