@@ -43,6 +43,8 @@ namespace Przegladarka_obazow
         bool imageModified = false;
         //Zmienna przechowująca informację czy histagram jest widoczny czy nie
         bool histogramView = false;
+        //Zmienna przechowująca informację czy oryginalne zdjęcie jest widoczne czy nie
+        bool originalPictureView = false;
         //Zmienna przechowująca jaki kolor maluje aktualnie histogram
         int histogramColorValue = 0;
         //Tablice do przechowywania informacji o histogramie
@@ -64,7 +66,9 @@ namespace Przegladarka_obazow
             bitmap = BitmapFromImageSource(zdj.Source);
             ImageEditBox.Source = ImageSourceFromBitmap(bitmap);
             PreviousImage = (Bitmap)bitmap.Clone();
+            ImageOriginalBox.Source = ImageEditBox.Source;
 
+            ImageOriginalVisible(false,true);
             HistogramControlVisible(false);
             FaceDetection();
             Plot1.PlotType = OxyPlot.PlotType.XY;
@@ -75,9 +79,7 @@ namespace Przegladarka_obazow
         private void MenuItem_Click_14(object sender, RoutedEventArgs e) => FilterAdd(new Negative(1));
         private void MenuItem_Click_15(object sender, RoutedEventArgs e) => FilterAdd(new Negative(2));
         private void MenuItem_Click_16(object sender, RoutedEventArgs e) => FilterAdd(new Negative(3));
-        //Wyrownanie histogramu
         private void MenuItem_Click_40(object sender, RoutedEventArgs e) => FilterAdd(new HistogramAlignment());
-        //Rozciaganie histogramu
         private void MenuItem_Click_41(object sender, RoutedEventArgs e) => FilterAdd(new HistogramStretching());
         private void MenuItem_Click_3(object sender, RoutedEventArgs e) => FilterAdd(new GrayScale());
         private void MenuItem_Click_42(object sender, RoutedEventArgs e) => FilterAdd(new GrayScaleToRGB());
@@ -89,31 +91,18 @@ namespace Przegladarka_obazow
 
         //Filtry z Accord.Imagining
         private void MenuItem_Click_6(object sender, RoutedEventArgs e) => FilterAdd(new Sepia());
-        //Filtr Obraz olejny
         private void MenuItem_Click_17(object sender, RoutedEventArgs e) => FilterAdd(new OilPainting());
-        //Pixeloza
         private void MenuItem_Click_18(object sender, RoutedEventArgs e) => FilterAdd(new Pixellate());
-        //Filtr środkowoprzepustowy
         private void MenuItem_Click_19(object sender, RoutedEventArgs e) => FilterAdd(new Median());
-        //Mean filter
         private void MenuItem_Click_20(object sender, RoutedEventArgs e) => FilterAdd(new Mean());
-        //Jitter filter
         private void MenuItem_Click_21(object sender, RoutedEventArgs e) => FilterAdd(new Jitter());
-        //Exponential filter
         private void MenuItem_Click_22(object sender, RoutedEventArgs e) => FilterAdd(new Exponential());
-        //Filtrowanie euklidesowe
         private void MenuItem_Click_23(object sender, RoutedEventArgs e) => FilterAdd(new EuclideanColorFiltering());
-        //AdditiveNoise
         private void MenuItem_Click_24(object sender, RoutedEventArgs e) => FilterAdd(new AdditiveNoise());
-        //TopHat
         private void MenuItem_Click_25(object sender, RoutedEventArgs e) => FilterAdd(new TopHat());
-        //Filtr wyostrzający
         private void MenuItem_Click_26(object sender, RoutedEventArgs e) => FilterAdd(new Sharpen());
-        //SaltAndPepperNoise
         private void MenuItem_Click_27(object sender, RoutedEventArgs e) => FilterAdd(new SaltAndPepperNoise());
-        //Chromatyczność RG
         private void MenuItem_Click_28(object sender, RoutedEventArgs e) => FilterAdd(new RGChromacity());
-        //Filtr logarytmiczny
         private void MenuItem_Click_29(object sender, RoutedEventArgs e) => FilterAdd(new Logarithm());
 
 
@@ -145,7 +134,7 @@ namespace Przegladarka_obazow
         {
             BinarizationValue dlg = new BinarizationValue();
             dlg.ShowDialog();
-            if(dlg.ModifiedStatus()==true) FilterAdd(new Binarization(dlg.binarizationvalue()));
+            if(dlg.ModifiedStatus()==true) FilterAdd(new Binarization(dlg.binarizationvalue(),dlg.tresholdvalue()));
             dlg.Close();
         }
 
@@ -242,10 +231,7 @@ namespace Przegladarka_obazow
             this.Cursor = Cursors.Arrow;
         }
 
-        private ImageSource ImageSourceFromBitmap(Bitmap bmp)
-        {
-            return Imaging.CreateBitmapSourceFromHBitmap(bmp.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
-        }
+        private ImageSource ImageSourceFromBitmap(Bitmap bmp) => Imaging.CreateBitmapSourceFromHBitmap(bmp.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
 
         private Bitmap BitmapFromImageSource(ImageSource img)
         {
@@ -275,7 +261,7 @@ namespace Przegladarka_obazow
 
         private void MenuItem_Click_4(object sender, RoutedEventArgs e)
         {
-            PreviousImage = (Bitmap)bitmap;
+            PreviousImage = bitmap;
             Obrot(1);
             Obrot(1);
         }
@@ -475,12 +461,33 @@ namespace Przegladarka_obazow
             if (histogramView == false) HistogramControlVisible(true);
             else HistogramControlVisible(false);
         }
+        private void MenuItemOriginalImage_Click(object sender, RoutedEventArgs e)
+        {
+            if (originalPictureView == false) ImageOriginalVisible(true);
+            else ImageOriginalVisible(false);
+        }
 
+        private void ImageOriginalVisible(bool val, bool initt = false)
+        {
+            if(val == false)
+            {
+                if(histogramView == false && initt == false) ImageEditBox.Margin = new Thickness(ImageEditBox.Margin.Left, ImageEditBox.Margin.Top, ImageEditBox.Margin.Right - 315, ImageEditBox.Margin.Bottom);
+                ImageOriginalBox.Visibility = Visibility.Hidden;
+                originalPictureView = val;
+            }
+            if(val == true)
+            {
+                if(histogramView == false && initt == false) ImageEditBox.Margin = new Thickness(ImageEditBox.Margin.Left, ImageEditBox.Margin.Top, ImageEditBox.Margin.Right + 315, ImageEditBox.Margin.Bottom);
+                ImageOriginalBox.Visibility = Visibility.Visible;
+                originalPictureView = val;
+                
+            }
+        }
         private void HistogramControlVisible(bool val)
         {
             if (val == false)
             {
-                ImageEditBox.Margin = new Thickness(ImageEditBox.Margin.Left, ImageEditBox.Margin.Top, ImageEditBox.Margin.Right - 315, ImageEditBox.Margin.Bottom);
+                if(originalPictureView == false) ImageEditBox.Margin = new Thickness(ImageEditBox.Margin.Left, ImageEditBox.Margin.Top, ImageEditBox.Margin.Right - 315, ImageEditBox.Margin.Bottom);
                 Plot1.Visibility = Visibility.Hidden;
                 ButtonAll.Visibility = Visibility.Hidden;
                 ButtonR.Visibility = Visibility.Hidden;
@@ -490,7 +497,7 @@ namespace Przegladarka_obazow
             }
             if (val == true)
             {
-                ImageEditBox.Margin = new Thickness(ImageEditBox.Margin.Left, ImageEditBox.Margin.Top, ImageEditBox.Margin.Right + 315, ImageEditBox.Margin.Bottom);
+                if(originalPictureView == false) ImageEditBox.Margin = new Thickness(ImageEditBox.Margin.Left, ImageEditBox.Margin.Top, ImageEditBox.Margin.Right + 315, ImageEditBox.Margin.Bottom);
                 Plot1.Visibility = Visibility.Visible;
                 ButtonAll.Visibility = Visibility.Visible;
                 ButtonR.Visibility = Visibility.Visible;
@@ -535,7 +542,6 @@ namespace Przegladarka_obazow
             if(dlg.ModifiedStatus()==true)
             {
                 BitmapImage bmp = new BitmapImage();
-
                 Stream stream = new MemoryStream();
                 var pngEncoder = new PngBitmapEncoder();
                 pngEncoder.Frames.Add(BitmapFrame.Create((BitmapSource)ImageEditBox.Source));
@@ -647,6 +653,7 @@ namespace Przegladarka_obazow
             var ocr = new TesseractEngine("./tessdata", "eng", EngineMode.TesseractAndCube);
             var page = ocr.Process(bitmap);
             MessageBox.Show(page.GetText());
+            ocr.Dispose();
         }
     }
 }

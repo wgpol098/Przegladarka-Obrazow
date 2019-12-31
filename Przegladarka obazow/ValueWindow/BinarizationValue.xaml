@@ -5,13 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Przegladarka_obazow.ValueWindow"
         mc:Ignorable="d"
-        Title="Próg binaryzacji" Height="168" Width="558" Margin="0" MaxWidth="558" MaxHeight="168" MinHeight="168" MinWidth="558">
+        Title="Próg binaryzacji" Height="182" Width="558" Margin="0" MinHeight="182" MaxHeight="182" MinWidth="558" MaxWidth="558">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="267*"/>
             <ColumnDefinition Width="8*"/>
         </Grid.ColumnDefinitions>
         <Slider x:Name="SliderBinarizationValue" HorizontalAlignment="Left" Margin="24,32,0,0" VerticalAlignment="Top" Width="502" Maximum="1000" Minimum="0"/>
-        <Button x:Name="OkButton" Content="OK" HorizontalAlignment="Left" Margin="231,91,0,0" VerticalAlignment="Top" Width="75" Click="OkButtonBinarization_Click"/>
+        <StackPanel Margin="24,60,0,42">
+            <RadioButton x:Name="rb2" Checked="rb2_Checked" IsChecked="True" Content="Górny próg"/>
+            <RadioButton x:Name="rb1" Checked="rb1_Checked" Margin="0,5,0,0" Content="Dolny próg"/>
+        </StackPanel>
+        <Button x:Name="OkButton" Content="OK" HorizontalAlignment="Left" Margin="231,114,0,0" VerticalAlignment="Top" Width="75" Click="OkButtonBinarization_Click"/>
     </Grid>
 </Window>

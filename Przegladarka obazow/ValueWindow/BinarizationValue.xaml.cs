@@ -18,6 +18,7 @@ namespace Przegladarka_obazow.ValueWindow
     {
         private int binarizationval = 0;
         private bool modified = false;
+        private int treshold = 1;
         public BinarizationValue()
         {
             InitializeComponent();
@@ -32,5 +33,16 @@ namespace Przegladarka_obazow.ValueWindow
 
         public bool ModifiedStatus() => modified;
         public int binarizationvalue() => binarizationval;
+        public int tresholdvalue() => treshold;
+
+        private void rb1_Checked(object sender, RoutedEventArgs e)
+        {
+            treshold = -1;
+        }
+
+        private void rb2_Checked(object sender, RoutedEventArgs e)
+        {
+            treshold = 1;
+        }
     }
 }

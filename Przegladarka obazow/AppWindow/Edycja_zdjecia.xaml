@@ -67,7 +67,7 @@
                         <MenuItem Header="Sharpen" Click="MenuItem_Click_45"/>
                         <MenuItem Header="SimplePosterization" Click="MenuItem_Click_46"/>
                     </MenuItem>
-                    
+
                 </MenuItem>
                 <MenuItem Header="Obraz">
                     <MenuItem Header="Obrót w prawo" Click="ObrotWPrawo_Click"/>
@@ -89,6 +89,7 @@
                 </MenuItem>
                 <MenuItem Header="Opcje">
                     <MenuItem Name="MenuItemHistagram" InputGestureText="Ctrl+H"  Header="Histogram" IsCheckable="True" Click="MenuItem_Click_12"/>
+                    <MenuItem Name="MenuItemOriginalImage" Header="Podgląd oryginalnego zdjęcia" IsCheckable="True" Click="MenuItemOriginalImage_Click"/>
                     <MenuItem Name="MenuItemFaceDetection"  InputGestureText="Crtl+F" Header="Rozpoznawanie twarzy" IsCheckable="True" Click="MenuItemFaceDetection_Click"/>
                 </MenuItem>
             </Menu>
@@ -117,6 +118,8 @@
         <Button Name="ButtonR" Content="R" HorizontalAlignment="Right" Margin="0,204,170,0" VerticalAlignment="Top" Width="75" Click="ButtonR_Click"/>
         <Button Name="ButtonG" Content="G" Margin="0,204,90,0" VerticalAlignment="Top" RenderTransformOrigin="1.347,0.8" Click="ButtonG_Click" HorizontalAlignment="Right" Width="75"/>
         <Button Name="ButtonB" Content="B" Margin="0,204,10,0" VerticalAlignment="Top" Click="ButtonB_Click" HorizontalAlignment="Right" Width="75"/>
+
+        <Image x:Name="ImageOriginalBox" Margin="0,229,10,0" Height="180" VerticalAlignment="Top" HorizontalAlignment="Right" Width="315"/>
 
     </Grid>
 </Window>

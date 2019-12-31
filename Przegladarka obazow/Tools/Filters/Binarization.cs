@@ -12,11 +12,13 @@ namespace Przegladarka_obazow.Tools.Filters
     {
         //value is 0-255
         int value = 0;
-        Edycja_zdjecia elo;
+        //1 or -1
+        int treshold = -1;
 
-        public Binarization(int _value)
+        public Binarization(int _value, int _theshold)
         {
             value = _value;
+            treshold = _theshold;
         }
 
         public void ApplyInPlace(Bitmap bitmap)
@@ -34,17 +36,39 @@ namespace Przegladarka_obazow.Tools.Filters
                 byte valueGS = (byte)(0.299 * pixelValues[3 * i + 2] + 0.587 * pixelValues[3 * i + 1] + 0.114 * pixelValues[3 * i]);
                 if(value > valueGS)
                 {
-                    pixelValues[3 * i] = 0;
-                    pixelValues[3 * i + 1] = 0;
-                    pixelValues[3 * i + 2] = 0;
+                    //Górny próg
+                    if(treshold == 1)
+                    {
+                        pixelValues[3 * i] = 0;
+                        pixelValues[3 * i + 1] = 0;
+                        pixelValues[3 * i + 2] = 0;
+                    }
+
+                    //Dolny próg
+                    if(treshold == -1)
+                    {
+                        pixelValues[3 * i] = 255;
+                        pixelValues[3 * i + 1] = 255;
+                        pixelValues[3 * i + 2] = 255;
+                    }
+                    
                 }
                 else
                 {
-                    pixelValues[3 * i] = 255;
-                    pixelValues[3 * i + 1] = 255;
-                    pixelValues[3 * i + 2] = 255;
-                }
-                
+                    if(treshold == 1)
+                    {
+                        pixelValues[3 * i] = 255;
+                        pixelValues[3 * i + 1] = 255;
+                        pixelValues[3 * i + 2] = 255;
+                    }
+                    if(treshold == -1)
+                    {
+                        pixelValues[3 * i] = 0;
+                        pixelValues[3 * i + 1] = 0;
+                        pixelValues[3 * i + 2] = 0;
+                    }
+                    
+                }               
             });
 
             System.Runtime.InteropServices.Marshal.Copy(pixelValues, 0, bmpData.Scan0, pixelValues.Length);
