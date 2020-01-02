@@ -144,6 +144,8 @@
     <Compile Include="Tools\Filters\Negative.cs" />
     <Compile Include="Tools\Histogram\HistogramStretching.cs" />
     <Compile Include="Tools\LUT\LutModifications.cs" />
+    <Compile Include="Tools\Options\DeleteColor.cs" />
+    <Compile Include="Tools\Options\IsolateColor.cs" />
     <Compile Include="Tools\Options\PixelsRange.cs" />
     <Compile Include="ValueWindow\BinarizationValue.xaml.cs">
       <DependentUpon>BinarizationValue.xaml</DependentUpon>
@@ -268,6 +270,16 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Graphics\Slideshow\back.png" />
+    <Resource Include="Graphics\Slideshow\next.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="AppWindow\next.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="AppWindow\back.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Accord.3.8.0\build\Accord.targets" Condition="Exists('..\packages\Accord.3.8.0\build\Accord.targets')" />

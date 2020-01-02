@@ -35,6 +35,8 @@
                     <MenuItem Header="Binaryzacja obrazu" Click="MenuItem_Click_43"/>
                     <MenuItem Header="Rotacja kolorów" Click="MenuItem_Click_44"/>
                     <MenuItem Header="Modyfikacja zakresu pikseli" Click="MenuItem_Click_47"/>
+                    <MenuItem Header="Usuwanie danego koloru" Click="MenuItem_Click_49"/>
+                    <MenuItem Header="Izolacja danego koloru" Click="MenuItem_Click_50"/>
 
                     <MenuItem Header="Accord Imagining">
                         <MenuItem Header="Sepia" Click="MenuItem_Click_6"/>

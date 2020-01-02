@@ -35,15 +35,15 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
-                        <Button>
-                            <Image Name="image1" Source="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="300" Height="300" Stretch="UniformToFill" MouseDown="GoToEdition" />
+                        <Button Background="Green">
+                            <Image Name="image1" Source="{Binding}" Width="Auto" Height="200" Stretch="UniformToFill" MouseDown="GoToEdition"/>
                         </Button>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid Columns="4"/>
+                    <UniformGrid Columns="6"/>
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
         </ListBox>

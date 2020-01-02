@@ -19,6 +19,13 @@
             Nacisnij "Enter" aby zamknąć tą informację.
         </Label>
 
+        <Button Margin="0,132,0,138" HorizontalAlignment="Right" Width="100" Height="100" Click="ClickNext">
+            <Image Source="next.png"></Image>
+        </Button>
+        <Button HorizontalAlignment="Left" Width="100" Height="100" Click="ClickBack">
+            <Image Source="back.png"></Image>
+        </Button>
+
 
     </Grid>
 </Window>

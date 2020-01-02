@@ -18,9 +18,9 @@ namespace Przegladarka_obazow.ValueWindow
     {
         private int MinRange = 0;
         private int MaxRange = 255;
-        private bool R = false;
-        private bool G = false;
-        private bool B = false;
+        private bool R = true;
+        private bool G = true;
+        private bool B = true;
         private bool modified = false;
         public PixelsRangeValue()
         {
@@ -29,19 +29,13 @@ namespace Przegladarka_obazow.ValueWindow
         private void ButtonOK_Click(object sender, RoutedEventArgs e)
         {          
             MinRange = (int)(SliderMin.Value / 1000 * 255);
-            MaxRange = (int)(SliderMax.Value / 1000 * 255);          
-            if(CheckB.IsChecked == false && CheckG.IsChecked == false && CheckR.IsChecked == false)
-            {
-                R = true;
-                G = true;
-                B = true;
-            }
-            else
-            {
-                if (CheckR.IsChecked == true) R = true;
-                if (CheckG.IsChecked == true) G = true;
-                if (CheckB.IsChecked == true) B = true;
-            }
+            MaxRange = (int)(SliderMax.Value / 1000 * 255);
+            if (CheckR.IsChecked == true) R = true;
+            else R = false;
+            if (CheckG.IsChecked == true) G = true;
+            else G = false;
+            if (CheckB.IsChecked == true) B = true;
+            else B = false;
             modified = true;
             Close();
         }

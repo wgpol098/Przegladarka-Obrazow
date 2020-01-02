@@ -51,12 +51,22 @@ namespace Przegladarka_obazow.AppWindow
             ItemsImage = Items;
         }
 
+        private void ClickBack(object sender, RoutedEventArgs e)
+        {
+            ActiveImageNumber--;
+            UpdateImage();
+        }
+
+        private void ClickNext(object sender, RoutedEventArgs e)
+        {
+            ActiveImageNumber++;
+            UpdateImage();
+        }
         private void myControl_KeyDown(object sender,KeyEventArgs e)
         {
             if(e.Key == Key.Left || e.Key == Key.Down)
             {
                 ActiveImageNumber--;
-                ExitAnimation();
                 UpdateImage();      
             }
             if(e.Key == Key.Right || e.Key == Key.Up)

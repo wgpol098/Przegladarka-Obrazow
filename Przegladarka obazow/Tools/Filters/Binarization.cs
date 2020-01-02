@@ -50,8 +50,7 @@ namespace Przegladarka_obazow.Tools.Filters
                         pixelValues[3 * i] = 255;
                         pixelValues[3 * i + 1] = 255;
                         pixelValues[3 * i + 2] = 255;
-                    }
-                    
+                    }                 
                 }
                 else
                 {

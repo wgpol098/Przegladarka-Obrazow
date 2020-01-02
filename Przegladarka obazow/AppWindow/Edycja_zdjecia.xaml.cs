@@ -22,6 +22,7 @@ using Przegladarka_obazow.Tools.Histogram;
 using Przegladarka_obazow.Tools.Modifications;
 using Przegladarka_obazow.Tools.LUT;
 using Tesseract;
+using Przegladarka_obazow.Tools.Options;
 
 namespace Przegladarka_obazow
 {
@@ -119,6 +120,24 @@ namespace Przegladarka_obazow
         private void MenuItem_Click_45(object sender, RoutedEventArgs e) => FilterAdd(new Sharpen());
         private void MenuItem_Click_46(object sender, RoutedEventArgs e) => FilterAdd(new SimplePosterization());
 
+        //Izolacja danego koloru
+        private void MenuItem_Click_50(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Forms.ColorDialog dlg = new System.Windows.Forms.ColorDialog();
+            if(dlg.ShowDialog()==System.Windows.Forms.DialogResult.OK)
+            {
+                FilterAdd(new IsolateColor(dlg.Color.R, dlg.Color.G, dlg.Color.B));
+            }
+        }
+        //Usuwanie danego koloru
+        private void MenuItem_Click_49(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Forms.ColorDialog dlg = new System.Windows.Forms.ColorDialog();
+            if(dlg.ShowDialog()==System.Windows.Forms.DialogResult.OK)
+            {
+                FilterAdd(new DeleteColor(dlg.Color.R, dlg.Color.G, dlg.Color.B));
+            }
+        }
 
         //Modyfikator odcienia
         private void MenuItem_Click_30(object sender, RoutedEventArgs e)
@@ -191,7 +210,6 @@ namespace Przegladarka_obazow
                 imageModified = false;
                 imageName = file;
                 Title = imageName;
-
                 HistogramDraw();
                 FaceDetection();              
             } 
@@ -471,23 +489,26 @@ namespace Przegladarka_obazow
         {
             if(val == false)
             {
-                if(histogramView == false && initt == false) ImageEditBox.Margin = new Thickness(ImageEditBox.Margin.Left, ImageEditBox.Margin.Top, ImageEditBox.Margin.Right - 315, ImageEditBox.Margin.Bottom);
+                if(histogramView == false && initt == false) ImageEditBox.Margin = new Thickness(ImageEditBox.Margin.Left, ImageEditBox.Margin.Top, ImageEditBox.Margin.Right - 315, ImageEditBox.Margin.Bottom);               
                 ImageOriginalBox.Visibility = Visibility.Hidden;
                 originalPictureView = val;
             }
             if(val == true)
             {
                 if(histogramView == false && initt == false) ImageEditBox.Margin = new Thickness(ImageEditBox.Margin.Left, ImageEditBox.Margin.Top, ImageEditBox.Margin.Right + 315, ImageEditBox.Margin.Bottom);
+                if (histogramView == false) ImageOriginalBox.Margin = new Thickness(ImageOriginalBox.Margin.Left, 32, ImageOriginalBox.Margin.Right, ImageOriginalBox.Margin.Bottom);
+                if(histogramView == true) ImageOriginalBox.Margin = new Thickness(ImageOriginalBox.Margin.Left, 229, ImageOriginalBox.Margin.Right, ImageOriginalBox.Margin.Bottom);
                 ImageOriginalBox.Visibility = Visibility.Visible;
                 originalPictureView = val;
                 
             }
         }
-        private void HistogramControlVisible(bool val)
+        private void HistogramControlVisible(bool val, bool initt = false)
         {
             if (val == false)
             {
-                if(originalPictureView == false) ImageEditBox.Margin = new Thickness(ImageEditBox.Margin.Left, ImageEditBox.Margin.Top, ImageEditBox.Margin.Right - 315, ImageEditBox.Margin.Bottom);
+                if(originalPictureView == false && initt == false) ImageEditBox.Margin = new Thickness(ImageEditBox.Margin.Left, ImageEditBox.Margin.Top, ImageEditBox.Margin.Right - 315, ImageEditBox.Margin.Bottom);
+                if(originalPictureView == true) ImageOriginalBox.Margin = new Thickness(ImageOriginalBox.Margin.Left, 32, ImageOriginalBox.Margin.Right, ImageOriginalBox.Margin.Bottom);
                 Plot1.Visibility = Visibility.Hidden;
                 ButtonAll.Visibility = Visibility.Hidden;
                 ButtonR.Visibility = Visibility.Hidden;
@@ -497,7 +518,8 @@ namespace Przegladarka_obazow
             }
             if (val == true)
             {
-                if(originalPictureView == false) ImageEditBox.Margin = new Thickness(ImageEditBox.Margin.Left, ImageEditBox.Margin.Top, ImageEditBox.Margin.Right + 315, ImageEditBox.Margin.Bottom);
+                if(originalPictureView == false && initt == false) ImageEditBox.Margin = new Thickness(ImageEditBox.Margin.Left, ImageEditBox.Margin.Top, ImageEditBox.Margin.Right + 315, ImageEditBox.Margin.Bottom);
+                if(originalPictureView == true) ImageOriginalBox.Margin = new Thickness(ImageOriginalBox.Margin.Left, 229, ImageOriginalBox.Margin.Right, ImageOriginalBox.Margin.Bottom);
                 Plot1.Visibility = Visibility.Visible;
                 ButtonAll.Visibility = Visibility.Visible;
                 ButtonR.Visibility = Visibility.Visible;

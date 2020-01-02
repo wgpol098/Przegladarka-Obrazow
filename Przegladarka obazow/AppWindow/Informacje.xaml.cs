@@ -20,17 +20,16 @@ namespace Przegladarka_obazow
     /// </summary>
     public partial class Informacje : Window
     {
-        public Informacje(Image zdj, String imagename)
+        public Informacje(Image zdj, string imagename)
         {
             InitializeComponent();
             OkButton.Focus();
 
-            System.IO.Stream stream = new System.IO.MemoryStream();
+            Stream stream = new MemoryStream();
             var pngEncoder = new PngBitmapEncoder();
             pngEncoder.Frames.Add(BitmapFrame.Create((BitmapSource)zdj.Source));
             pngEncoder.Save(stream);
             System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap(stream);
-
 
             var fi1 = new FileInfo(imagename);
 
@@ -39,7 +38,7 @@ namespace Przegladarka_obazow
             ResolutionLabel.Content = "Rozdzielczość: " + bitmap.Width + "x" + bitmap.Height;
             FormatLabel.Content = "Rozszerzenie pliku: " + fi1.Extension;
 
-            String tmp = bitmap.PixelFormat.ToString();
+            string tmp = bitmap.PixelFormat.ToString();
             tmp = tmp.Remove(0, 6);
             PixelFormatLabel.Content = "Format pikseli: " + tmp;
 
