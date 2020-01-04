@@ -23,6 +23,7 @@ using Przegladarka_obazow.Tools.Modifications;
 using Przegladarka_obazow.Tools.LUT;
 using Tesseract;
 using Przegladarka_obazow.Tools.Options;
+using Przegladarka_obazow.AppWindow;
 
 namespace Przegladarka_obazow
 {
@@ -124,19 +125,13 @@ namespace Przegladarka_obazow
         private void MenuItem_Click_50(object sender, RoutedEventArgs e)
         {
             System.Windows.Forms.ColorDialog dlg = new System.Windows.Forms.ColorDialog();
-            if(dlg.ShowDialog()==System.Windows.Forms.DialogResult.OK)
-            {
-                FilterAdd(new IsolateColor(dlg.Color.R, dlg.Color.G, dlg.Color.B));
-            }
+            if(dlg.ShowDialog()==System.Windows.Forms.DialogResult.OK) FilterAdd(new IsolateColor(dlg.Color.R, dlg.Color.G, dlg.Color.B));
         }
         //Usuwanie danego koloru
         private void MenuItem_Click_49(object sender, RoutedEventArgs e)
         {
             System.Windows.Forms.ColorDialog dlg = new System.Windows.Forms.ColorDialog();
-            if(dlg.ShowDialog()==System.Windows.Forms.DialogResult.OK)
-            {
-                FilterAdd(new DeleteColor(dlg.Color.R, dlg.Color.G, dlg.Color.B));
-            }
+            if(dlg.ShowDialog()==System.Windows.Forms.DialogResult.OK) FilterAdd(new DeleteColor(dlg.Color.R, dlg.Color.G, dlg.Color.B));
         }
 
         //Modyfikator odcienia
@@ -274,7 +269,12 @@ namespace Przegladarka_obazow
         private void MouseDownHandler(object sender, MouseButtonEventArgs e)
         {
             //Sprawdz czy prawym czy lewym
-            if (e.ClickCount == 2) MessageBox.Show("Działa");
+            if (e.ClickCount == 2)
+            {
+                FastFilter dlg = new FastFilter(bitmap);
+                dlg.ShowDialog();
+                dlg.Close();
+            } 
         }
 
         private void MenuItem_Click_4(object sender, RoutedEventArgs e)
@@ -422,7 +422,7 @@ namespace Przegladarka_obazow
             
             if (histogramView == false) return;
 
-            this.Cursor = Cursors.Wait;
+            Cursor = Cursors.Wait;
 
             Array.Clear(HistogramAll, 0, 256);
             Array.Clear(HistogramR, 0, 256);
@@ -455,7 +455,7 @@ namespace Przegladarka_obazow
             bitmap.UnlockBits(bmpData);
 
             FillHistogram();
-            this.Cursor = Cursors.Arrow;
+            Cursor = Cursors.Arrow;
         }
 
         private void FillHistogram()
@@ -464,7 +464,7 @@ namespace Przegladarka_obazow
             IList<OxyPlot.DataPoint> Points;
             Points = new List<OxyPlot.DataPoint>();
 
-            for (int i = 1; i < 255; i++)
+            for (byte i = 1; i < 255; i++)
             {
                 if (histogramColorValue == 0) Points.Add(new OxyPlot.DataPoint(i, HistogramAll[i]));
                 if (histogramColorValue == 1) Points.Add(new OxyPlot.DataPoint(i, HistogramR[i]));

@@ -33,11 +33,11 @@ namespace Przegladarka_obazow.Tools.Filters
                         {
                             int y1 = (int)Math.Round((value - 0.299 * x - 0.144 * z) / 0.587);
                             int z1 = (int)Math.Round((value - 0.299 * x - 0.587 * y1) / 0.144);
-                            x = (int)Math.Round((value - 0.587 * y - 0.144 * z) / 0.299);
+                            //x = (int)Math.Round((value - 0.587 * y - 0.144 * z) / 0.299);
                             if (x < 256 && x >= 0)
                             {
-                                y1 = (int)Math.Round((value - 0.299 * x - 0.144 * z) / 0.587);
-                                z1 = (int)Math.Round((value - 0.299 * x - 0.587 * y1) / 0.144);
+                                //y1 = (int)Math.Round((value - 0.299 * x - 0.144 * z) / 0.587);
+                                //z1 = (int)Math.Round((value - 0.299 * x - 0.587 * y1) / 0.144);
                                 if (value == (byte)Math.Round(x * 0.299 + y1 * 0.587 + z1 * 0.114))
                                 {
                                     pixelValues[3 * i] = (byte)x;

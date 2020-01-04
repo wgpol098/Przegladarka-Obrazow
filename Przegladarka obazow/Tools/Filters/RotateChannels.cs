@@ -12,22 +12,28 @@ namespace Przegladarka_obazow.Tools.Filters
     {
         public void ApplyInPlace(Bitmap bitmap)
         {
+            int bytesPerPixel = Image.GetPixelFormatSize(bitmap.PixelFormat) / 8;
             BitmapData bmpData = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadWrite, bitmap.PixelFormat);
             byte[] pixelValues = new byte[Math.Abs(bmpData.Stride) * bitmap.Height];
             System.Runtime.InteropServices.Marshal.Copy(bmpData.Scan0, pixelValues, 0, pixelValues.Length);
 
-            int size = bitmap.Width * bitmap.Height;
-            Parallel.For(0, size, i =>
-            {
-                byte tmp = pixelValues[3 * i + 2];
-                //R to G               
-                pixelValues[3 * i + 2] = pixelValues[3 * i + 1];
-                //G to B
-                pixelValues[3 * i + 1] = pixelValues[3 * i];
-                //B to R
-                pixelValues[3 * i] = tmp;
-            });
+            int width = bitmap.Width;
+            int height = bitmap.Height;
 
+            Parallel.For(0, height, y =>
+            {
+                Parallel.For(0, width, x =>
+                {
+                    int index = y * bmpData.Stride + x * bytesPerPixel;
+                    byte tmp = pixelValues[index + 2];
+                    //R to G               
+                    pixelValues[index + 2] = pixelValues[index + 1];
+                    //G to B
+                    pixelValues[index + 1] = pixelValues[index];
+                    //B to R
+                    pixelValues[index] = tmp;
+                });
+            });
             System.Runtime.InteropServices.Marshal.Copy(pixelValues, 0, bmpData.Scan0, pixelValues.Length);
             bitmap.UnlockBits(bmpData);
         }
