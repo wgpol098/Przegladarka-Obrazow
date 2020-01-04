@@ -13,10 +13,15 @@ namespace Przegladarka_obazow.Tools.Filters
     {
         public void ApplyInPlace(Bitmap bitmap)
         {
+            int bytesPerPixel = Image.GetPixelFormatSize(bitmap.PixelFormat) / 8;
             BitmapData bmpData = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadWrite, bitmap.PixelFormat);
             byte[] pixelValues = new byte[Math.Abs(bmpData.Stride) * bitmap.Height];
             System.Runtime.InteropServices.Marshal.Copy(bmpData.Scan0, pixelValues, 0, pixelValues.Length);
 
+            int width = bitmap.Width;
+            int height = bitmap.Height;
+
+            
             int size = bitmap.Width * bitmap.Height;
             
             Parallel.For(0, size, i =>

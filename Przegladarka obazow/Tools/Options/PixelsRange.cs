@@ -27,30 +27,36 @@ namespace Przegladarka_obazow.Tools.Modifications
         }
         public void ApplyInPlace(Bitmap bitmap)
         {
+            int bytesPerPixel = Image.GetPixelFormatSize(bitmap.PixelFormat) / 8;
             BitmapData bmpData = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadWrite, bitmap.PixelFormat);
             byte[] pixelValues = new byte[Math.Abs(bmpData.Stride) * bitmap.Height];
             System.Runtime.InteropServices.Marshal.Copy(bmpData.Scan0, pixelValues, 0, pixelValues.Length);
 
-            int size = bitmap.Width * bitmap.Height;
-            Parallel.For(0, size, i =>
+            int width = bitmap.Width;
+            int height = bitmap.Height;
+            Parallel.For(0, height, y =>
             {
-                if(B==true)
+                Parallel.For(0, width, x =>
                 {
-                    if (outPR <= pixelValues[3 * i]) pixelValues[3 * i] = (byte)outPR;
-                    else if (inPR >= pixelValues[3 * i]) pixelValues[3 * i] = (byte)inPR;
-                }
-                
-                if(G==true)
-                {
-                    if (outPR <= pixelValues[3 * i + 1]) pixelValues[3 * i + 1] = (byte)outPR;
-                    else if (inPR >= pixelValues[3 * i + 1]) pixelValues[3 * i + 1] = (byte)inPR;
-                }
-                
-                if(R==true)
-                {
-                    if (outPR <= pixelValues[3 * i + 2]) pixelValues[3 * i + 2] = (byte)outPR;
-                    else if (inPR >= pixelValues[3 * i + 2]) pixelValues[3 * i + 2] = (byte)inPR;
-                }
+                    int index = y * bmpData.Stride + x * bytesPerPixel;
+                    if (B == true)
+                    {
+                        if (outPR <= pixelValues[index]) pixelValues[index] = (byte)outPR;
+                        else if (inPR >= pixelValues[index]) pixelValues[index] = (byte)inPR;
+                    }
+
+                    if (G == true)
+                    {
+                        if (outPR <= pixelValues[index + 1]) pixelValues[index + 1] = (byte)outPR;
+                        else if (inPR >= pixelValues[index + 1]) pixelValues[index + 1] = (byte)inPR;
+                    }
+
+                    if (R == true)
+                    {
+                        if (outPR <= pixelValues[index + 2]) pixelValues[index + 2] = (byte)outPR;
+                        else if (inPR >= pixelValues[index + 2]) pixelValues[index + 2] = (byte)inPR;
+                    }
+                });
             });
 
             System.Runtime.InteropServices.Marshal.Copy(pixelValues, 0, bmpData.Scan0, pixelValues.Length);

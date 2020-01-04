@@ -4,6 +4,7 @@ using Przegladarka_obazow.Tools.Histogram;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +25,7 @@ namespace Przegladarka_obazow.AppWindow
     /// </summary>
     public partial class FastFilter : Window
     {
+        private bool modified=false;
         private Bitmap org;
         private int numberfilter;
         public FastFilter(Bitmap bitmap)
@@ -36,6 +38,13 @@ namespace Przegladarka_obazow.AppWindow
             Title = "Original";
         }
 
+        public bool ModifiedStatus() => modified;
+        public ImageSource NewFilterSource() => ImageFilterBox.Source;
+
+        private void FastFilter_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            org.Dispose();
+        }
         private void KeyDownUI(object sender, KeyEventArgs e)
         {
             if(e.Key == Key.Right) numberfilter++;
@@ -43,6 +52,14 @@ namespace Przegladarka_obazow.AppWindow
             if(e.Key == Key.Left) numberfilter--;
 
             UpdateImage();
+
+            if(e.Key == Key.Enter)
+            {
+                modified = true;
+                Close();
+            }
+
+            if(e.Key == Key.Escape) Close();
         }
 
         private void UpdateImage()
@@ -219,5 +236,14 @@ namespace Przegladarka_obazow.AppWindow
             Cursor = Cursors.Arrow;
         }
         private ImageSource ImageSourceFromBitmap(Bitmap bmp) => Imaging.CreateBitmapSourceFromHBitmap(bmp.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+
+        private Bitmap BitmapFromImageSource(ImageSource img)
+        {
+            Stream stream = new MemoryStream();
+            var pngEncoder = new PngBitmapEncoder();
+            pngEncoder.Frames.Add(BitmapFrame.Create((BitmapSource)img));
+            pngEncoder.Save(stream);
+            return new Bitmap(stream);
+        }
     }
 }

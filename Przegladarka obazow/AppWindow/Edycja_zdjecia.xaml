@@ -21,6 +21,8 @@
                     <MenuItem Header="Zamknij" InputGestureText="Esc" Click="MenuItem_Click_1"/>
                 </MenuItem>
                 <MenuItem Header="Filtry">
+                    <MenuItem Header="FastFilter" Click="MenuItem_Click_51"/>
+                    <Separator/>
                     <MenuItem Header="Negatyw">
                         <MenuItem Header="Wszystkie kanały" Click="MenuItem_Click"/>
                         <Separator/>
@@ -92,7 +94,7 @@
                 <MenuItem Header="Opcje">
                     <MenuItem Name="MenuItemHistagram" InputGestureText="Ctrl+H"  Header="Histogram" IsCheckable="True" Click="MenuItem_Click_12"/>
                     <MenuItem Name="MenuItemOriginalImage" Header="Podgląd oryginalnego zdjęcia" IsCheckable="True" Click="MenuItemOriginalImage_Click"/>
-                    <MenuItem Name="MenuItemFaceDetection"  InputGestureText="Crtl+F" Header="Rozpoznawanie twarzy" IsCheckable="True" Click="MenuItemFaceDetection_Click"/>
+                    <MenuItem Name="MenuItemFaceDetection"  InputGestureText="Ctrl+F" Header="Rozpoznawanie twarzy" IsCheckable="True" Click="MenuItemFaceDetection_Click"/>
                 </MenuItem>
             </Menu>
         </DockPanel>

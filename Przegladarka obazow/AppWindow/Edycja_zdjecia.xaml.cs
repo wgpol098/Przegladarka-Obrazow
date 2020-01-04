@@ -268,13 +268,8 @@ namespace Przegladarka_obazow
 
         private void MouseDownHandler(object sender, MouseButtonEventArgs e)
         {
-            //Sprawdz czy prawym czy lewym
-            if (e.ClickCount == 2)
-            {
-                FastFilter dlg = new FastFilter(bitmap);
-                dlg.ShowDialog();
-                dlg.Close();
-            } 
+            if (e.LeftButton == MouseButtonState.Pressed)
+                if (e.ClickCount == 2) FastFilterAdd();
         }
 
         private void MenuItem_Click_4(object sender, RoutedEventArgs e)
@@ -676,6 +671,23 @@ namespace Przegladarka_obazow
             var page = ocr.Process(bitmap);
             MessageBox.Show(page.GetText());
             ocr.Dispose();
+        }
+
+        private void MenuItem_Click_51(object sender, RoutedEventArgs e) => FastFilterAdd();
+
+        private void FastFilterAdd()
+        {
+            FastFilter dlg = new FastFilter(bitmap);
+            dlg.ShowDialog();
+            if (dlg.ModifiedStatus() == true)
+            {
+                PreviousImage = bitmap;
+                ImageEditBox.Source = dlg.NewFilterSource();
+                bitmap = BitmapFromImageSource(ImageEditBox.Source);
+                ImageModified();
+            }
+            dlg.Close();
+            GC.Collect();
         }
     }
 }

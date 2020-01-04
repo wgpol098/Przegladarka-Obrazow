@@ -6,8 +6,16 @@
         xmlns:local="clr-namespace:Przegladarka_obazow.AppWindow"
         mc:Ignorable="d"
         Title="FastFilter" Height="450" Width="800"
-        KeyDown="KeyDownUI">
+        KeyDown="KeyDownUI"
+        Closing="FastFilter_Closing">
     <Grid>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                <GradientStop Offset="0" Color="LightGray"/>
+                <GradientStop Offset="0.5" Color="Gray"/>
+                <GradientStop Offset="1" Color="LightGray"/>
+            </LinearGradientBrush>
+        </Grid.Background>
         <Image Name="ImageFilterBox" Margin="10,10,0,66" HorizontalAlignment="Stretch" Width="Auto" Stretch="Uniform"/>
 
     </Grid>
