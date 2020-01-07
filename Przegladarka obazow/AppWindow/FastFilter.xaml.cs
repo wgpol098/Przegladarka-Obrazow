@@ -235,7 +235,20 @@ namespace Przegladarka_obazow.AppWindow
             }
             Cursor = Cursors.Arrow;
         }
-        private ImageSource ImageSourceFromBitmap(Bitmap bmp) => Imaging.CreateBitmapSourceFromHBitmap(bmp.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+        private ImageSource ImageSourceFromBitmap(Bitmap bmp)
+        {
+            IntPtr hBitmap = bmp.GetHbitmap();
+            try
+            {
+                var source = Imaging.CreateBitmapSourceFromHBitmap(hBitmap, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+                return source;
+            }
+            finally
+            {
+                DeleteObject(hBitmap);
+                GC.Collect(0, GCCollectionMode.Forced);
+            }
+        }
 
         private Bitmap BitmapFromImageSource(ImageSource img)
         {
@@ -245,5 +258,8 @@ namespace Przegladarka_obazow.AppWindow
             pngEncoder.Save(stream);
             return new Bitmap(stream);
         }
+
+        [System.Runtime.InteropServices.DllImport("gdi32.dll")]
+        public static extern bool DeleteObject(IntPtr hObject);
     }
 }

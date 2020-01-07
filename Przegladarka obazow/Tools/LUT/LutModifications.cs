@@ -64,5 +64,12 @@ namespace Przegladarka_obazow.Tools.LUT
 
             return LUT;
         }
+
+        public static byte[] NegativeLUT()
+        {
+            byte[] LUT = new byte[256];
+            for(int i=0; i < 256;i++) LUT[i] = (byte)(255 - i);
+            return LUT;
+        }
     }
 }

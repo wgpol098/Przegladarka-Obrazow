@@ -84,10 +84,6 @@ namespace Przegladarka_obazow.AppWindow
             }
         }
 
-        private void ExitAnimation()
-        {
-            //Storyboard tmp = new Storyboard();
-        }
         private void UpdateImage()
         {
             if (ActiveImageNumber == -1) ActiveImageNumber = max-1;
@@ -97,14 +93,23 @@ namespace Przegladarka_obazow.AppWindow
                 ImageSlide.Source = null;
                 ImageSlide.Source = ImageSourceFromBitmap(tmp);
                 tmp.Dispose();
-                GC.Collect();
+                GC.Collect(0, GCCollectionMode.Forced);
             }
         }
 
         private ImageSource ImageSourceFromBitmap(Bitmap bmp)
         {
-            var handle = bmp.GetHbitmap();
-            return Imaging.CreateBitmapSourceFromHBitmap(handle, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+            IntPtr hBitmap = bmp.GetHbitmap();
+            try
+            {
+                var source = Imaging.CreateBitmapSourceFromHBitmap(hBitmap, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+                return source;
+            }
+            finally
+            {
+                DeleteObject(hBitmap);
+                GC.Collect(0, GCCollectionMode.Forced);
+            }
         }
 
         private void SlideshowClosing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -112,5 +117,8 @@ namespace Przegladarka_obazow.AppWindow
             ImageSlide.Source = null;
             GC.Collect();
         }
+
+        [System.Runtime.InteropServices.DllImport("gdi32.dll")]
+        public static extern bool DeleteObject(IntPtr hObject);
     }
 }

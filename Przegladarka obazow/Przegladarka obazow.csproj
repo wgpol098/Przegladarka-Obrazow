@@ -150,6 +150,7 @@
     <Compile Include="Tools\Options\DeleteColor.cs" />
     <Compile Include="Tools\Options\IsolateColor.cs" />
     <Compile Include="Tools\Options\PixelsRange.cs" />
+    <Compile Include="Tools\Options\ReplaceColor.cs" />
     <Compile Include="ValueWindow\BinarizationValue.xaml.cs">
       <DependentUpon>BinarizationValue.xaml</DependentUpon>
     </Compile>

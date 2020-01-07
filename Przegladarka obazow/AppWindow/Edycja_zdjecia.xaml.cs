@@ -38,7 +38,6 @@ namespace Przegladarka_obazow
         //Zmienna przechowująca nazwę pliku w pamięci
         string imageName = "";
         //Zmienne potrzebne do przechowywania w pamięci zmian w obrazie
-        TransformedBitmap EditedBitMap;
         Bitmap PreviousImage;
         Bitmap bitmap;
         //Zmienna przechowyjąca informację czy obraz był modyfikowany
@@ -121,6 +120,15 @@ namespace Przegladarka_obazow
         private void MenuItem_Click_45(object sender, RoutedEventArgs e) => FilterAdd(new Sharpen());
         private void MenuItem_Click_46(object sender, RoutedEventArgs e) => FilterAdd(new SimplePosterization());
 
+        //Zamiana danego koloru
+        private void MenuItem_Click_52(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Forms.ColorDialog dlg1 = new System.Windows.Forms.ColorDialog();
+            System.Windows.Forms.ColorDialog dlg2 = new System.Windows.Forms.ColorDialog();
+
+            if (dlg1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                if (dlg2.ShowDialog() == System.Windows.Forms.DialogResult.OK) FilterAdd(new ReplaceColor(dlg1.Color.R, dlg1.Color.R, dlg2.Color.B, dlg2.Color.R, dlg2.Color.G, dlg2.Color.B));
+        }
         //Izolacja danego koloru
         private void MenuItem_Click_50(object sender, RoutedEventArgs e)
         {
@@ -213,38 +221,46 @@ namespace Przegladarka_obazow
         {
             e.Effects = DragDropEffects.All;
         }
-        private void ObrotWPrawo_Click(object sender, RoutedEventArgs e)
-        {
-            PreviousImage = bitmap;
-            Obrot(1);
-        }
-        private void ObrotWLewo_Click(object sender, RoutedEventArgs e)
-        {
-            PreviousImage = bitmap;
-            Obrot(-1);
-        }
+        private void ObrotWPrawo_Click(object sender, RoutedEventArgs e) => Obrot(1);
+        private void ObrotWLewo_Click(object sender, RoutedEventArgs e) => Obrot(-1);
+        private void ObrotWPionie_Click(object sender, RoutedEventArgs e) => Obrot(0);
+        private void ObrotWPoziomie_Click(object sender, RoutedEventArgs e) => Obrot(2);
+
         private void Obrot(int value)
         {
-            this.Cursor = Cursors.Wait;
-            
-            EditedBitMap = null;
-            EditedBitMap = new TransformedBitmap();
+            Cursor = Cursors.Wait;
 
-            EditedBitMap.BeginInit();
-            EditedBitMap.Source = (BitmapSource)ImageSourceFromBitmap(bitmap);
-            if (value == -1) EditedBitMap.Transform = new RotateTransform(90);
-            if (value == 1) EditedBitMap.Transform = new RotateTransform(-90);
-            EditedBitMap.EndInit();
-            
-            ImageEditBox.Source = EditedBitMap;
-            bitmap = BitmapFromImageSource(ImageEditBox.Source);
-            if( imageModified == false ) Title += "*";
+            IntPtr hBitmap = PreviousImage.GetHbitmap();
+            PreviousImage = (Bitmap)bitmap.Clone();
+            if(value == 1) bitmap.RotateFlip(RotateFlipType.Rotate90FlipXY);
+            if(value == -1) bitmap.RotateFlip(RotateFlipType.Rotate270FlipXY);
+            if (value == 0) bitmap.RotateFlip(RotateFlipType.Rotate180FlipNone);
+            if (value == 2) bitmap.RotateFlip(RotateFlipType.RotateNoneFlipX);
+            ImageEditBox.Source = ImageSourceFromBitmap(bitmap);
+                        
+            DeleteObject(hBitmap);
+            if (imageModified == false) this.Title = this.Title + "*";
             imageModified = true;
             FaceDetection();
-            this.Cursor = Cursors.Arrow;
-        }
 
-        private ImageSource ImageSourceFromBitmap(Bitmap bmp) => Imaging.CreateBitmapSourceFromHBitmap(bmp.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+            GC.Collect(0, GCCollectionMode.Forced);
+            Cursor = Cursors.Arrow;
+    }
+
+        private ImageSource ImageSourceFromBitmap(Bitmap bmp)
+        {
+            IntPtr hBitmap = bmp.GetHbitmap();
+            try
+            {
+                var source = Imaging.CreateBitmapSourceFromHBitmap(hBitmap, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+                return source;
+            }
+            finally 
+            {
+                DeleteObject(hBitmap);
+                GC.Collect(0, GCCollectionMode.Forced);
+            }           
+        } 
 
         private Bitmap BitmapFromImageSource(ImageSource img)
         {
@@ -272,28 +288,11 @@ namespace Przegladarka_obazow
                 if (e.ClickCount == 2) FastFilterAdd();
         }
 
-        private void MenuItem_Click_4(object sender, RoutedEventArgs e)
-        {
-            PreviousImage = bitmap;
-            Obrot(1);
-            Obrot(1);
-        }
-
-        private void ObrotWPoziomie_Click(object sender, RoutedEventArgs e)
-        {
-            this.Cursor = Cursors.Wait;
-            PreviousImage = (Bitmap)bitmap.Clone();
-            bitmap.RotateFlip(RotateFlipType.RotateNoneFlipX);
-            ImageEditBox.Source = ImageSourceFromBitmap(bitmap);
-            imageModified = true;
-            FaceDetection();
-            this.Cursor = Cursors.Arrow;
-        }
-
         private void MenuItem_Click_5(object sender, RoutedEventArgs e)
         {
             Informacje info = new Informacje(ImageEditBox,imageName);
             info.ShowDialog();
+            info.Close();
         }
 
         private void Cofnij_Click(object sender, RoutedEventArgs e)
@@ -303,30 +302,33 @@ namespace Przegladarka_obazow
             {
                 bitmap = PreviousImage;
                 PreviousImage = (Bitmap)tmp.Clone();
-                tmp?.Dispose();
+                tmp.Dispose();
             }           
             HistogramDraw();
             FaceDetection();
-            GC.Collect();
+            GC.Collect(0, GCCollectionMode.Forced);
         }
 
         //rozjaśnianie
         private void MenuItem_Click_7(object sender, RoutedEventArgs e)
-        {
-            PreviousImage = (Bitmap)bitmap.Clone();
+        {         
             LightValue dlg = new LightValue();
             dlg.ShowDialog();
 
-            this.Cursor = Cursors.Wait;
+            Cursor = Cursors.Wait;
             if (dlg.ModifiedStatus()==true)
             {
+                IntPtr hBitmap = PreviousImage.GetHbitmap();
+                PreviousImage = (Bitmap)bitmap.Clone();
                 byte[] LUT = LutModifications.LightLUT(dlg.lightvalue());
                 LutModifications.SetLUTToBitmap(bitmap, LUT);
                 ImageEditBox.Source = ImageSourceFromBitmap(bitmap);
+                DeleteObject(hBitmap);
                 ImageModified();
+                GC.Collect(0, GCCollectionMode.Forced);
             }
             dlg.Close();
-            this.Cursor = Cursors.Arrow;
+            Cursor = Cursors.Arrow;
         }
 
         private void MenuItem_Click_8(object sender, RoutedEventArgs e)
@@ -354,7 +356,7 @@ namespace Przegladarka_obazow
                 bitmap.Dispose();
                 PreviousImage.Dispose();
                 ImageEditBox.Source = null;
-                GC.Collect();
+                GC.Collect(0, GCCollectionMode.Forced);
                 return;
             }
             RoutedEventArgs e2 = new RoutedEventArgs();
@@ -362,7 +364,7 @@ namespace Przegladarka_obazow
             bitmap.Dispose();
             PreviousImage.Dispose();
             ImageEditBox.Source = null;
-            GC.Collect();
+            GC.Collect(0, GCCollectionMode.Forced);
         }
 
         //Otwieranie pliku
@@ -376,11 +378,16 @@ namespace Przegladarka_obazow
                 bit.Source = new BitmapImage(new Uri(d.FileName));
                 ImageEditBox.Source = bit.Source;
                 PreviousImage = BitmapFromImageSource(ImageEditBox.Source);
+                IntPtr hBitmap1 = PreviousImage.GetHbitmap();
+                IntPtr hBitmap2 = bitmap.GetHbitmap();
                 bitmap = PreviousImage;
                 imageName = ImageEditBox.Source.ToString();
                 imageName = imageName.Remove(0, 8);
                 imageName = imageName.Replace('/', '\\');
                 Title = imageName;
+                DeleteObject(hBitmap1);
+                DeleteObject(hBitmap2);
+                GC.Collect(0, GCCollectionMode.Forced);
             }
             HistogramDraw();
             FaceDetection();
@@ -389,32 +396,37 @@ namespace Przegladarka_obazow
         //Korekcja gamma
         private void MenuItem_Click_10(object sender, RoutedEventArgs e)
         {
-            this.Cursor = Cursors.Wait;
+            Cursor = Cursors.Wait;
+            IntPtr hBitmap = PreviousImage.GetHbitmap();
             PreviousImage = (Bitmap)bitmap.Clone();
             double gammavalue = 1.1;
             byte[] LUT = LutModifications.GammaLUT(gammavalue);
             LutModifications.SetLUTToBitmap(bitmap, LUT);
             ImageEditBox.Source = ImageSourceFromBitmap(bitmap);
             ImageModified();
-            this.Cursor = Cursors.Arrow;
+            DeleteObject(hBitmap);
+            GC.Collect(0, GCCollectionMode.Forced);
+            Cursor = Cursors.Arrow;
         }
 
         //Korekcja kontrastu
         private void MenuItem_Click_11(object sender, RoutedEventArgs e)
         {
-            this.Cursor = Cursors.Wait;
+            Cursor = Cursors.Wait;
+            IntPtr hBitmap = PreviousImage.GetHbitmap();
             PreviousImage = (Bitmap)bitmap.Clone();
             double correctionvalue = 30;
             byte[] LUT = LutModifications.CorrectionLUT(correctionvalue);
             LutModifications.SetLUTToBitmap(bitmap, LUT);
             ImageEditBox.Source = ImageSourceFromBitmap(bitmap);
             ImageModified();
-            this.Cursor = Cursors.Arrow;
+            DeleteObject(hBitmap);
+            GC.Collect(0, GCCollectionMode.Forced);
+            Cursor = Cursors.Arrow;
         }
 
         private void HistogramDraw()
-        {
-            
+        {           
             if (histogramView == false) return;
 
             Cursor = Cursors.Wait;
@@ -442,12 +454,12 @@ namespace Przegladarka_obazow
                       HistogramB[pixelValues[index]]++;
                   });
              });
-                
-            for(int i=0;i<256;i++)
-                HistogramAll[i] = HistogramR[i] + HistogramG[i] + HistogramB[i];
-            
+                          
             System.Runtime.InteropServices.Marshal.Copy(pixelValues, 0, bmpData.Scan0, pixelValues.Length);
             bitmap.UnlockBits(bmpData);
+
+            for (int i = 0; i < 256; i++)
+                HistogramAll[i] = HistogramR[i] + HistogramG[i] + HistogramB[i];
 
             FillHistogram();
             Cursor = Cursors.Arrow;
@@ -469,6 +481,14 @@ namespace Przegladarka_obazow
             no.ItemsSource = Points;
         }
 
+        private void MouseEnterImageOriginalBox(object sender, MouseEventArgs e)
+        {
+            ImageEditBox.Source = ImageOriginalBox.Source;
+        }
+        private void MouseLeaveImageOriginalBox(object sender, MouseEventArgs e)
+        {
+            ImageEditBox.Source = ImageSourceFromBitmap(bitmap);
+        }
         private void MenuItem_Click_12(object sender, RoutedEventArgs e)
         {
             if (histogramView == false) HistogramControlVisible(true);
@@ -577,17 +597,19 @@ namespace Przegladarka_obazow
 
             dlg.Close();
         }
-       
+
         private void FilterAdd(dynamic filter)
         {
             this.Cursor = Cursors.Wait;
             try
             {
+                IntPtr hBitmap = PreviousImage.GetHbitmap();
                 PreviousImage = (Bitmap)bitmap.Clone();
                 filter.ApplyInPlace(bitmap);
                 ImageEditBox.Source = ImageSourceFromBitmap(bitmap);
                 ImageModified();
-                GC.Collect();
+                DeleteObject(hBitmap);
+                GC.Collect(0, GCCollectionMode.Forced);
             }
             catch
             {
@@ -598,7 +620,7 @@ namespace Przegladarka_obazow
 
         private void MenuItemFaceDetection_Click(object sender, RoutedEventArgs e)
         {
-            this.Cursor = Cursors.Wait;
+            Cursor = Cursors.Wait;
 
             if (FaceDetectionValue == true)
             {
@@ -608,7 +630,7 @@ namespace Przegladarka_obazow
             else FaceDetectionValue = true;
             FaceDetection(true);
 
-            this.Cursor = Cursors.Arrow;
+            Cursor = Cursors.Arrow;
         }
 
         private void ImageModified()
@@ -681,13 +703,25 @@ namespace Przegladarka_obazow
             dlg.ShowDialog();
             if (dlg.ModifiedStatus() == true)
             {
-                PreviousImage = bitmap;
+                IntPtr hBitmap = PreviousImage.GetHbitmap();
+                PreviousImage = (Bitmap)bitmap.Clone();
                 ImageEditBox.Source = dlg.NewFilterSource();
                 bitmap = BitmapFromImageSource(ImageEditBox.Source);
                 ImageModified();
+                DeleteObject(hBitmap);
             }
             dlg.Close();
-            GC.Collect();
+            GC.Collect(0, GCCollectionMode.Forced);
         }
+
+        private void GetImagePixelColor(object sender, MouseButtonEventArgs e)
+        {
+            //System.Windows.Point point = Mouse.GetPosition(ImageEditBox);            
+            //System.Drawing.Color cl = bitmap.GetPixel((int)((point.X / ImageEditBox.ActualWidth) * bitmap.Width), (int)((point.Y / ImageEditBox.ActualHeight) * bitmap.Height));
+            //MessageBox.Show(cl.R + " " + cl.G + " " + cl.B);
+        }
+
+        [System.Runtime.InteropServices.DllImport("gdi32.dll")]
+        public static extern bool DeleteObject(IntPtr hObject);
     }
 }
