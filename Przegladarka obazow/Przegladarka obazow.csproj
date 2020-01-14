@@ -194,7 +194,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AppWindow\Informacje.xaml">
+    <Page Include="AppWindow\Informations.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -216,8 +216,8 @@
     <Compile Include="AppWindow\Foldery.xaml.cs">
       <DependentUpon>Foldery.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AppWindow\Informacje.xaml.cs">
-      <DependentUpon>Informacje.xaml</DependentUpon>
+    <Compile Include="AppWindow\Informations.xaml.cs">
+      <DependentUpon>Informations.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

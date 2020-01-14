@@ -1,0 +1,3 @@
+Mój negatyw: 730,064497142857 ms
+Binarization: 600,696767142857 ms
+GrayScale: 604,757854285715 ms

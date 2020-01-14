@@ -7,8 +7,8 @@
         mc:Ignorable="d"
         Title="Zmiana rozdzielczości" Height="220" Width="480" MinWidth="480" MinHeight="220" MaxHeight="220" MaxWidth="480">
     <Grid>
-        <TextBox Name="XPX" HorizontalAlignment="Left" Height="23" Margin="93,33,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Keyboard.KeyUp="TextChangedResolution1"/>
-        <TextBox Name="YPX" HorizontalAlignment="Left" Height="23" Margin="259,33,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Keyboard.KeyUp="TextChangedResolution2"/>
+        <TextBox Name="XPX" PreviewTextInput="NumberValidationTextBox" HorizontalAlignment="Left" Height="23" Margin="93,33,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Keyboard.KeyUp="TextChangedResolution1"/>
+        <TextBox Name="YPX" PreviewTextInput="NumberValidationTextBox" HorizontalAlignment="Left" Height="23" Margin="259,33,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Keyboard.KeyUp="TextChangedResolution2"/>
         <Button Name="OK" Content="OK" HorizontalAlignment="Left" Margin="138,126,0,0" VerticalAlignment="Top" Width="75" Click="OK_Click"/>
         <Button Name="Cancel" Content="Anuluj" HorizontalAlignment="Left" Margin="259,126,0,0" VerticalAlignment="Top" Width="75" Click="Cancel_Click"/>
         <CheckBox Name="Checkbox" Content="Zachowaj proporcje obrazu" HorizontalAlignment="Left" Margin="93,82,0,0" VerticalAlignment="Top" IsChecked="true"/>

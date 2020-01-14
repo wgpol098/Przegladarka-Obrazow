@@ -21,6 +21,7 @@
                     <MenuItem Name="Face" Header="Zdjęcia na których są twarze" IsCheckable="False" Click="MenuItem_Click_4"/>
                 </MenuItem>
                 <MenuItem Header="Pokaz slajdów" Click="MenuItem_Click_5"/>
+                <MenuItem Header="Test wydajnosci" Click="Test_wydajnosci"/>
             </Menu>
         </DockPanel>
 

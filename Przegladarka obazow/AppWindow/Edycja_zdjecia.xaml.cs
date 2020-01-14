@@ -76,10 +76,10 @@ namespace Przegladarka_obazow
         }
 
         //Ze swoich
-        private void MenuItem_Click(object sender, RoutedEventArgs e) => FilterAdd(new Negative(0));
-        private void MenuItem_Click_14(object sender, RoutedEventArgs e) => FilterAdd(new Negative(1));
-        private void MenuItem_Click_15(object sender, RoutedEventArgs e) => FilterAdd(new Negative(2));
-        private void MenuItem_Click_16(object sender, RoutedEventArgs e) => FilterAdd(new Negative(3));
+        private void NegativeAll_Click(object sender, RoutedEventArgs e) => FilterAdd(new Negative(0));
+        private void NegativeR_Click(object sender, RoutedEventArgs e) => FilterAdd(new Negative(1));
+        private void NegativeG_Click(object sender, RoutedEventArgs e) => FilterAdd(new Negative(2));
+        private void NegativeB_Click(object sender, RoutedEventArgs e) => FilterAdd(new Negative(3));
         private void MenuItem_Click_40(object sender, RoutedEventArgs e) => FilterAdd(new HistogramAlignment());
         private void MenuItem_Click_41(object sender, RoutedEventArgs e) => FilterAdd(new HistogramStretching());
         private void MenuItem_Click_3(object sender, RoutedEventArgs e) => FilterAdd(new GrayScale());
@@ -186,13 +186,17 @@ namespace Przegladarka_obazow
                     {
                         graphics.DrawRectangle(pen, rectangle);
                         i++;
+                        pen.Dispose();
                     }
-                }
+                    graphics.Dispose();
+                }   
             }
             if(i==0)
                 if(OpenProperty == true) MessageBox.Show("Nie znaleziono twarzy na zdjęciu!", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information); 
             if(i!=0) ImageEditBox.Source = ImageSourceFromBitmap(tmp);
+            grayImage.Dispose();
             tmp.Dispose();
+            GC.Collect(0, GCCollectionMode.Forced);
         }
         private void DropImageDrop(object sender, DragEventArgs e)
         {
@@ -209,6 +213,7 @@ namespace Przegladarka_obazow
                 bitmap = b;
                 PreviousImage = b;
                 ImageEditBox.Source = ImageSourceFromBitmap(b);
+                ImageOriginalBox.Source = ImageSourceFromBitmap(b);
                 
                 imageModified = false;
                 imageName = file;
@@ -221,12 +226,12 @@ namespace Przegladarka_obazow
         {
             e.Effects = DragDropEffects.All;
         }
-        private void ObrotWPrawo_Click(object sender, RoutedEventArgs e) => Obrot(1);
-        private void ObrotWLewo_Click(object sender, RoutedEventArgs e) => Obrot(-1);
-        private void ObrotWPionie_Click(object sender, RoutedEventArgs e) => Obrot(0);
-        private void ObrotWPoziomie_Click(object sender, RoutedEventArgs e) => Obrot(2);
+        private void ObrotWPrawo_Click(object sender, RoutedEventArgs e) => Rotate(1);
+        private void ObrotWLewo_Click(object sender, RoutedEventArgs e) => Rotate(-1);
+        private void ObrotWPionie_Click(object sender, RoutedEventArgs e) => Rotate(0);
+        private void ObrotWPoziomie_Click(object sender, RoutedEventArgs e) => Rotate(2);
 
-        private void Obrot(int value)
+        private void Rotate(int value)
         {
             Cursor = Cursors.Wait;
 
@@ -288,14 +293,14 @@ namespace Przegladarka_obazow
                 if (e.ClickCount == 2) FastFilterAdd();
         }
 
-        private void MenuItem_Click_5(object sender, RoutedEventArgs e)
+        private void Informations_Click(object sender, RoutedEventArgs e)
         {
             Informacje info = new Informacje(ImageEditBox,imageName);
             info.ShowDialog();
             info.Close();
         }
 
-        private void Cofnij_Click(object sender, RoutedEventArgs e)
+        private void Back_Click(object sender, RoutedEventArgs e)
         {
             ImageEditBox.Source = ImageSourceFromBitmap(PreviousImage);
             using (Bitmap tmp = bitmap)
@@ -489,7 +494,7 @@ namespace Przegladarka_obazow
         {
             ImageEditBox.Source = ImageSourceFromBitmap(bitmap);
         }
-        private void MenuItem_Click_12(object sender, RoutedEventArgs e)
+        private void MenuItemHistogram_Click(object sender, RoutedEventArgs e)
         {
             if (histogramView == false) HistogramControlVisible(true);
             else HistogramControlVisible(false);
@@ -571,13 +576,15 @@ namespace Przegladarka_obazow
 
         //Zmiana rozdzielczości 
         private void MenuItem_Click_13(object sender, RoutedEventArgs e)
-        {
-            PreviousImage = (Bitmap)bitmap;
+        {          
             ImageResizeValue dlg = new ImageResizeValue(ImageEditBox);
             dlg.ShowDialog();
 
             if(dlg.ModifiedStatus()==true)
             {
+                IntPtr hBitmap = PreviousImage.GetHbitmap();
+                DeleteObject(hBitmap);
+                PreviousImage = bitmap;
                 BitmapImage bmp = new BitmapImage();
                 Stream stream = new MemoryStream();
                 var pngEncoder = new PngBitmapEncoder();
@@ -593,14 +600,14 @@ namespace Przegladarka_obazow
                 ImageEditBox.Source = bmp;
                 bitmap = BitmapFromImageSource(ImageEditBox.Source);
                 ImageModified();
+                GC.Collect(0, GCCollectionMode.Forced);
             }
-
             dlg.Close();
         }
 
         private void FilterAdd(dynamic filter)
         {
-            this.Cursor = Cursors.Wait;
+            Cursor = Cursors.Wait;
             try
             {
                 IntPtr hBitmap = PreviousImage.GetHbitmap();
@@ -615,7 +622,7 @@ namespace Przegladarka_obazow
             {
                 MessageBox.Show("Format pikseli tego obrazu nie umożliwia wykonania tej operacji!", "Błąd!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            this.Cursor = Cursors.Arrow;
+            Cursor = Cursors.Arrow;
         }
 
         private void MenuItemFaceDetection_Click(object sender, RoutedEventArgs e)
@@ -648,7 +655,7 @@ namespace Przegladarka_obazow
 
             //Cofanie zmian
             if(Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.Z)
-                Cofnij_Click(sender,tmp);
+                Back_Click(sender,tmp);
 
             //Otwieranie pliku
             if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.O)
@@ -669,7 +676,7 @@ namespace Przegladarka_obazow
             //Histogram
             if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.H)
             {
-                MenuItem_Click_12(sender, tmp);
+                MenuItemHistogram_Click(sender, tmp);
                 if (MenuItemHistagram.IsChecked == false) MenuItemHistagram.IsChecked = true;
                 else MenuItemHistagram.IsChecked = false;
             }
@@ -684,7 +691,7 @@ namespace Przegladarka_obazow
 
             //Informacje
             if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.I)
-                MenuItem_Click_5(sender, tmp);
+                Informations_Click(sender, tmp);
         }
 
         private void MenuItem_Click_48(object sender, RoutedEventArgs e)

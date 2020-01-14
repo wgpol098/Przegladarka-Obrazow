@@ -24,11 +24,11 @@
                     <MenuItem Header="FastFilter" Click="MenuItem_Click_51"/>
                     <Separator/>
                     <MenuItem Header="Negatyw">
-                        <MenuItem Header="Wszystkie kanały" Click="MenuItem_Click"/>
+                        <MenuItem Header="Wszystkie kanały" Click="NegativeAll_Click"/>
                         <Separator/>
-                        <MenuItem Header="Kanał czerwony" Click="MenuItem_Click_14"/>
-                        <MenuItem Header="Kanał zielony" Click="MenuItem_Click_15"/>
-                        <MenuItem Header="Kanał niebieski" Click="MenuItem_Click_16"/>
+                        <MenuItem Header="Kanał czerwony" Click="NegativeR_Click"/>
+                        <MenuItem Header="Kanał zielony" Click="NegativeG_Click"/>
+                        <MenuItem Header="Kanał niebieski" Click="NegativeB_Click"/>
                     </MenuItem>
                     <MenuItem Header="Wyrównanie histogramu" Click="MenuItem_Click_40"/>
                     <MenuItem Header="Rozciąganie histogramu" Click="MenuItem_Click_41"/>
@@ -88,12 +88,12 @@
                     <Separator/>
                     <MenuItem Header="Wykryj tekst" Click="MenuItem_Click_48"/>
                     <Separator/>
-                    <MenuItem Header="Cofnij ostatnią zmianę" Click="Cofnij_Click" InputGestureText="Ctrl+Z"/>
+                    <MenuItem Header="Cofnij ostatnią zmianę" Click="Back_Click" InputGestureText="Ctrl+Z"/>
                     <Separator/>
-                    <MenuItem Header="Informacje" InputGestureText="Ctrl+I" Click="MenuItem_Click_5"/>
+                    <MenuItem Header="Informacje" InputGestureText="Ctrl+I" Click="Informations_Click"/>
                 </MenuItem>
                 <MenuItem Header="Opcje">
-                    <MenuItem Name="MenuItemHistagram" InputGestureText="Ctrl+H"  Header="Histogram" IsCheckable="True" Click="MenuItem_Click_12"/>
+                    <MenuItem Name="MenuItemHistagram" InputGestureText="Ctrl+H"  Header="Histogram" IsCheckable="True" Click="MenuItemHistogram_Click"/>
                     <MenuItem Name="MenuItemOriginalImage" Header="Podgląd oryginalnego zdjęcia" IsCheckable="True" Click="MenuItemOriginalImage_Click"/>
                     <MenuItem Name="MenuItemFaceDetection"  InputGestureText="Ctrl+F" Header="Rozpoznawanie twarzy" IsCheckable="True" Click="MenuItemFaceDetection_Click"/>
                 </MenuItem>
@@ -112,7 +112,7 @@
         <Image x:Name="ImageEditBox" Margin="10,60,325,10" Source="" MouseDown="MouseDownHandler" HorizontalAlignment="Stretch" Width="Auto" Stretch="Uniform" AllowDrop="true" DragEnter="DropImageEnter" DragDrop.Drop="DropImageDrop" MouseLeftButtonDown="GetImagePixelColor"/>
         <Button x:Name="ObrotWPrawo" Content="W prawo" HorizontalAlignment="Left" Margin="90,35,0,0" VerticalAlignment="Top" Width="75" Click="ObrotWPrawo_Click"/>
         <Button x:Name="ObrotWLewo" Content="W lewo" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" Width="75" Click="ObrotWLewo_Click"/>
-        <Button x:Name="Cofnij" Content="Cofnij" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="170,35,0,0" Click="Cofnij_Click"/>
+        <Button x:Name="Cofnij" Content="Cofnij" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="170,35,0,0" Click="Back_Click"/>
 
         <oxy1:Plot x:Name="Plot1" Title="Histogram" Margin="0,32,10,0" Height="167" VerticalAlignment="Top" HorizontalAlignment="Right" Width="315">
             <oxy1:Plot.Series>

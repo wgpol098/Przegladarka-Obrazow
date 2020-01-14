@@ -223,12 +223,14 @@ namespace Przegladarka_obazow
                     {
                         graphics.DrawRectangle(pen, rectange);
                         i++;
+                        pen.Dispose();
                     }
+                    graphics.Dispose();
                 }
             }
             tmp.Dispose();
             grayImage.Dispose();
-            GC.Collect();
+            GC.Collect(0, GCCollectionMode.Forced);
             if (i != 0) return true;
 
             return false;
@@ -251,6 +253,47 @@ namespace Przegladarka_obazow
         {
             Slideshow slide = new Slideshow(thumbnails.Items);
             slide.ShowDialog();
+        }
+
+        private void Test_wydajnosci(object sender, RoutedEventArgs e)
+        {
+            StreamWriter test = new StreamWriter("test.txt");
+
+            test.WriteLine("Mój negatyw: " + TimeFunction(new Tools.Filters.Negative(0)).ToString() + " ms");
+            test.WriteLine("Binarization: " + TimeFunction(new Tools.Filters.Binarization(155, 344)).ToString() + " ms");
+            test.WriteLine("GrayScale: " + TimeFunction(new Tools.Filters.GrayScale()).ToString() + " ms");
+
+            test.Close();
+        }
+
+        private double TimeFunction(dynamic filter)
+        {
+            double ile = 0;
+            double TotalTime = 0;
+            string directory = "C:\\Users\\pwawr\\OneDrive\\Studia\\III rok\\Programowanie w środowisku Windows\\Labolatoria\\Projekt WPF\\Testy";
+            if (Directory.Exists(directory))
+            {
+                var pliki = Directory.EnumerateFiles(directory/*,"*.*", SearchOption.AllDirectories*/).Where(s => s.EndsWith(".jpg") || s.EndsWith(".png") || s.EndsWith(".bmp") || s.EndsWith(".gif") || s.EndsWith(".JPG") || s.EndsWith(".BMP") || s.EndsWith(".PNG") || s.EndsWith(".GIF"));
+                
+                for (int i = 0; i < pliki.Count(); i++)
+                {
+                    using (Bitmap tmp = new Bitmap(pliki.ElementAt(i)))
+                    {
+                        System.Diagnostics.Stopwatch time = new System.Diagnostics.Stopwatch();
+                        time.Start();
+                        try
+                        {
+                            filter.ApplyInPlace(tmp);
+                            ile++;
+                        }
+                        catch { }
+                        time.Stop();
+                        TimeSpan ts = time.Elapsed;
+                        TotalTime += ts.TotalMilliseconds;
+                    }
+                }
+            }
+            return TotalTime/ile;
         }
     }
 }
