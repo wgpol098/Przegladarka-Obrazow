@@ -26,21 +26,68 @@ namespace Przegladarka_obazow.Tools.Filters
             byte[] pixelValues = new byte[Math.Abs(bmpData.Stride) * bitmap.Height];
             System.Runtime.InteropServices.Marshal.Copy(bmpData.Scan0, pixelValues, 0, pixelValues.Length);
 
-            int width = bitmap.Width;
-            int height = bitmap.Height;
-
             byte[] LUT = LutModifications.NegativeLUT();
 
-            Parallel.For(0, height, y =>
+            
+
+            if (bitmap.PixelFormat == PixelFormat.Format24bppRgb)
             {
-                Parallel.For(0, width, x =>
-                {
-                    int index = y * bmpData.Stride + x * bytesPerPixel;
-                    if (val == 0 || val == 1) pixelValues[index + 2] = LUT[pixelValues[index + 2]];
-                    if (val == 0 || val == 2) pixelValues[index + 1] = LUT[pixelValues[index + 1]];
-                    if (val == 0 || val == 3) pixelValues[index] = LUT[pixelValues[index]];
-                });
-            });
+                int size = bitmap.Size.Width * bitmap.Size.Height * 3;
+
+                if (val==0)
+                    for (int index = 0; index < size; index++)
+                    {
+                        pixelValues[index] = LUT[pixelValues[index]];
+                    }
+
+                if (val == 1)
+                    for (int index = 2; index < size; index += 3)
+                    {
+                        pixelValues[index] = LUT[pixelValues[index]];
+                    }
+                if(val == 2)
+                    for (int index = 1; index < size; index += 3)
+                    {
+                        pixelValues[index] = LUT[pixelValues[index]];
+                    }
+
+                if(val == 3)
+                    for (int index = 0; index < size; index += 3)
+                    {
+                        pixelValues[index] = LUT[pixelValues[index]];
+                    }
+
+            }
+
+            /* Parallel.For(0, size, index =>
+             {
+
+                 pixelValues[index] = LUT[pixelValues[index]];
+
+                 //if (val == 0 || val == 1) pixelValues[index + 2] = LUT[pixelValues[index + 2]];
+                 //if (val == 0 || val == 2) pixelValues[index + 1] = LUT[pixelValues[index + 1]];
+                 //if (val == 0 || val == 3) pixelValues[index] = LUT[pixelValues[index]];
+             }
+         );
+         */
+            /*
+            //Parallel.For(0, height, y =>
+            //{
+            //Parallel.For(0, width, x =>
+            //{
+            Parallel.For(0, size1, index =>
+             {
+
+                 if (val == 0 || val == 1) pixelValues[index + 2] = LUT[pixelValues[index + 2]];
+                 if (val == 0 || val == 2) pixelValues[index + 1] = LUT[pixelValues[index + 1]];
+                 if (val == 0 || val == 3) pixelValues[index] = LUT[pixelValues[index]];
+             }
+            );
+                 //   int index = y * bmpData.Stride + x * bytesPerPixel;
+                    
+                //});
+            //});
+            */
 
             System.Runtime.InteropServices.Marshal.Copy(pixelValues, 0, bmpData.Scan0, pixelValues.Length);
             bitmap.UnlockBits(bmpData);

@@ -259,9 +259,10 @@ namespace Przegladarka_obazow
         {
             StreamWriter test = new StreamWriter("test.txt");
 
-            test.WriteLine("Mój negatyw: " + TimeFunction(new Tools.Filters.Negative(0)).ToString() + " ms");
-            test.WriteLine("Binarization: " + TimeFunction(new Tools.Filters.Binarization(155, 344)).ToString() + " ms");
-            test.WriteLine("GrayScale: " + TimeFunction(new Tools.Filters.GrayScale()).ToString() + " ms");
+            //test.WriteLine("Mój negatyw: " + TimeFunction(new Tools.Filters.Negative(0)).ToString() + " ms");
+            //test.WriteLine("Mój negatyw B: " + TimeFunction(new Tools.Filters.Negative(3)).ToString() + " ms");
+            //test.WriteLine("Binarization: " + TimeFunction(new Tools.Filters.Binarization(155, 344)).ToString() + " ms");
+            test.WriteLine("HistogramAlignment: " + TimeFunction(new Tools.Filters.HistogramAlignment()).ToString() + " ms");
 
             test.Close();
         }
@@ -270,7 +271,7 @@ namespace Przegladarka_obazow
         {
             double ile = 0;
             double TotalTime = 0;
-            string directory = "C:\\Users\\pwawr\\OneDrive\\Studia\\III rok\\Programowanie w środowisku Windows\\Labolatoria\\Projekt WPF\\Testy";
+            string directory = "C:\\Users\\patryk\\OneDrive\\Studia\\III rok\\Programowanie w środowisku Windows\\Labolatoria\\Projekt WPF\\Przegladarka obazow\\Testy";
             if (Directory.Exists(directory))
             {
                 var pliki = Directory.EnumerateFiles(directory/*,"*.*", SearchOption.AllDirectories*/).Where(s => s.EndsWith(".jpg") || s.EndsWith(".png") || s.EndsWith(".bmp") || s.EndsWith(".gif") || s.EndsWith(".JPG") || s.EndsWith(".BMP") || s.EndsWith(".PNG") || s.EndsWith(".GIF"));

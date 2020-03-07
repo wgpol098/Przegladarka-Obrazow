@@ -88,6 +88,7 @@ namespace Przegladarka_obazow.AppWindow
         {
             if (ActiveImageNumber == -1) ActiveImageNumber = max-1;
             if (ActiveImageNumber == max) ActiveImageNumber = 0;
+            if(ItemsImage != null)
             using (Bitmap tmp = new Bitmap(ItemsImage.GetItemAt(ActiveImageNumber).ToString()))
             {
                 ImageSlide.Source = null;

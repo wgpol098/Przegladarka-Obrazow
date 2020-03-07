@@ -17,9 +17,22 @@ namespace Przegladarka_obazow.Tools.Filters
             byte[] pixelValues = new byte[Math.Abs(bmpData.Stride) * bitmap.Height];
             System.Runtime.InteropServices.Marshal.Copy(bmpData.Scan0, pixelValues, 0, pixelValues.Length);
 
-            int width = bitmap.Width;
-            int height = bitmap.Height;
+            if(bitmap.PixelFormat == PixelFormat.Format24bppRgb)
+            {
+                int size = bitmap.Size.Width * bitmap.Size.Height * 3;
 
+                for (int index=0; index<size;index+=3)
+                {
+                    byte tmp = pixelValues[index + 2];
+                    //R to G               
+                    pixelValues[index + 2] = pixelValues[index + 1];
+                    //G to B
+                    pixelValues[index + 1] = pixelValues[index];
+                    //B to R
+                    pixelValues[index] = tmp;
+                }
+            }
+            /*
             Parallel.For(0, height, y =>
             {
                 Parallel.For(0, width, x =>
@@ -34,6 +47,7 @@ namespace Przegladarka_obazow.Tools.Filters
                     pixelValues[index] = tmp;
                 });
             });
+            */
             System.Runtime.InteropServices.Marshal.Copy(pixelValues, 0, bmpData.Scan0, pixelValues.Length);
             bitmap.UnlockBits(bmpData);
         }
