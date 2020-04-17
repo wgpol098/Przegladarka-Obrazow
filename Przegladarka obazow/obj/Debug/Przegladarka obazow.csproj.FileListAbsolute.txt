@@ -198,3 +198,6 @@ C:\Users\patryk\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labo
 C:\Users\patryk\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\obj\Debug\Przegladarka obazow.csproj.CopyComplete
 C:\Users\patryk\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\obj\Debug\Przegladarka obazow.exe
 C:\Users\patryk\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\obj\Debug\Przegladarka obazow.pdb
+C:\Users\Patryk\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\obj\Debug\Przegladarka obazow.csproj.CoreCompileInputs.cache
+C:\Users\Patryk\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\Patryk\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\bin\Debug\System.Numerics.Vectors.xml

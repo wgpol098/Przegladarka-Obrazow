@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\obj\Debug\
+C:\Users\Patryk\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\obj\Debug\
 Przegladarka_obazow
 none
 false
 DEBUG;TRACE
-C:\Users\pwawr\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\App.xaml
+C:\Users\Patryk\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\Przegladarka obazow\App.xaml
 11-1677189947
-1-941939191
-281307269680
-34-1803322545
+1893071533
+28559516344
+361985192998
 AppWindow\Edycja_zdjecia.xaml;AppWindow\FastFilter.xaml;AppWindow\Foldery.xaml;AppWindow\Slideshow.xaml;ValueWindow\BinarizationValue.xaml;ValueWindow\HueModifierValue.xaml;ValueWindow\ImageResizeValue.xaml;AppWindow\Informations.xaml;ValueWindow\LightValue.xaml;MainWindow.xaml;ValueWindow\PixelsRangeValue.xaml;
 
-True
+False
 

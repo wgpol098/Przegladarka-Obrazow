@@ -1,2 +1,4 @@
 C:\Users\patryk\OneDrive\Studia\III rok\Podstawy grafiki komputerowej\Zdjęcia\Cw2_Kurz
 C:\Users\patryk\OneDrive\Studia\III rok\Podstawy grafiki komputerowej\Zdjęcia\Cw3
+C:\Users\Patryk\Desktop
+C:\Users\Patryk\OneDrive\Studia\III rok\Programowanie w środowisku Windows\Labolatoria\Projekt WPF\Przegladarka obazow\obrazki
