@@ -261,11 +261,11 @@ namespace Przegladarka_obazow
             StreamWriter test = new StreamWriter("test.txt");
 
             //test.WriteLine("Negatyw z biblioteki" + TimeFunction(new Invert()).ToString() + "ms");
-            test.WriteLine("Mój negatyw: " + TimeFunction(new Tools.Filters.Negative(0)).ToString() + " ms");
+            //test.WriteLine("Mój negatyw: " + TimeFunction(new Tools.Filters.Negative(3)).ToString() + " ms");
             //test.WriteLine("Mój negatyw B: " + TimeFunction(new Tools.Filters.Negative(3)).ToString() + " ms");
             //test.WriteLine("Binarization: " + TimeFunction(new Tools.Filters.Binarization(155, 344)).ToString() + " ms");
             //test.WriteLine("HistogramAlignment: " + TimeFunction(new Tools.Filters.HistogramAlignment()).ToString() + " ms");
-
+            test.WriteLine("Mój grayscale: " + TimeFunction(new Tools.Filters.GrayScale()).ToString() + " ms");
             test.Close();
         }
 

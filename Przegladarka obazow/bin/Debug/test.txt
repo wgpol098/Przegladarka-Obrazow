@@ -1,1 +1,1 @@
-Mój negatyw: 59,2467842857143 ms
+Mój grayscale: 104,388012857143 ms
