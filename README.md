@@ -1,2 +1,2 @@
-# Przegladarka Obrazow
- Przegladarka obrazow
+# Image Viewer
+ Image Viewer
