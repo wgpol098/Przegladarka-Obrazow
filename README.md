@@ -1,4 +1,8 @@
 # Przeglądarka obrazów
- Pzreglądarka obrazów
 
-Jest to prosta przeglądarka obrazów napisana w c#. Przeglądarka posiada wiele możliwości, na zdjęcia można nakładać wszelkiego rodzaju filtry, wyszukiwać jedynie zdjęcia na których są twarze oraz pokaz slajdów.
+This is a simple image viewer. The browser has many possibilities, you can apply filter types to photos, search only photos with faces and slide show.
+
+<b>Screenshot</b>
+
+
+<b>Functionality<b>
