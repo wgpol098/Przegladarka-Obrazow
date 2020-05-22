@@ -24,7 +24,7 @@ This is a simple image viewer. The browser has many possibilities, you can apply
   <li>Displaying photos of faces</li>
   <li>Detecting text in the photo</li>
   <li>Histogram preview</li>
-  <li>selection of photo folders</li>
+  <li>Selection of photo folders</li>
   <li>Slideshow</li>
   <li>Applying Filters to the photo</li>
   <li>Negative filter</li>
